@@ -34,7 +34,7 @@ section{
     justify-content: center;
     align-items: center;
     align-self: start;
-    animation: opening-banner 5s;
+    /* animation: opening-banner 5s; */
     z-index: 1;
 }
 
@@ -191,4 +191,8 @@ section{
     opacity: 1;
     filter: blur(0);
     transform: translateX(0%)
+}
+
+#test{
+    transform: translate(100,0)
 }

@@ -28,7 +28,8 @@ export default function Terminal(props){
     useLayoutEffect(() => {
 
         function handleResize(){
-            setDim([terminalRef.current.clientWidth, terminalRef.current.clientHeight]);
+            // this is too laggy
+            //setDim([terminalRef.current.clientWidth, terminalRef.current.clientHeight]);
         }
         window.addEventListener('resize', handleResize);
     })

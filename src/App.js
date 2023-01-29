@@ -5,13 +5,12 @@ import me from './resources/images/me.jpg'
 import {Button, Grid} from '@mui/material'
 import DynamicGallery from './components/DynamicGallery';
 
-
 function App() {
     return (
         <div className="App">
             <div id="banner">
                 <div id="welcome-text">
-                    <h1>Welcome!</h1>
+                    <h6>Redo this in spring!</h6>
                 </div>
                 <div id="navbar-contents">
                     <a href="#about-me" class="nav-link">About me</a>
