@@ -131,11 +131,11 @@ export default function Terminal(props){
                 setCred(cred)
                 break;
             case 'ping':
-                addToLogs("pong")
+                addToLogs([text,"pong"])
                 break;
             case 'whoareyou':
             case 'aboutme':
-                addToLogs("TODO: Copy about me paragraph here");
+                addToLogs([text, "TODO: Copy about me paragraph here"]);
                 break;
             default:
                 addToLogs([text, `Command '${words[0]}' not found.`])
