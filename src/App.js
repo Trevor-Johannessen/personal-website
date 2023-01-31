@@ -4,6 +4,7 @@ import Terminal from "./components/Terminal"
 import me from './resources/images/me.jpg' 
 import {Button, Grid} from '@mui/material'
 import DynamicGallery from './components/DynamicGallery';
+import FunnyChess from './components/FunnyChess';
 
 function App() {
     return (
@@ -48,10 +49,9 @@ function App() {
                     <div class="showcase-split" align="left">
                         Lorem ipsum dolor, sit amet consectetur adipisicing elit. Pariatur possimus suscipit inventore impedit perferendis distinctio velit minus ad. Facilis tenetur accusamus quisquam ad cupiditate impedit, nihil dolores enim quibusdam, tempora corrupti sed cum, sunt quam. Maxime explicabo dolor quibusdam ad sunt ea exercitationem, aperiam neque reiciendis at vel, fuga quaerat placeat, nesciunt quasi dicta? Repellat, consequatur maxime? Illum voluptatum quae velit atque eveniet sint libero, et ut error fuga asperiores nam tempora nobis ipsam reprehenderit modi odit temporibus vero inventore earum! Placeat voluptates quas veniam qui non asperiores! Odio vero provident quaerat neque iure doloribus, vel eaque sunt corporis unde.
                     </div>
-                    <Terminal class="showcase-split slide-in-right-start" align="right">
-                        
-                    </Terminal>
+                    <Terminal class="showcase-split slide-in-right-start" align="right"/>
                 </div>
+                <FunnyChess width='30' height='10'/>
             </div>
             <div id="contact">
 
