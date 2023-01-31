@@ -5,6 +5,15 @@ export default function FunnyChess(props) {
     const height = 30;
     const pixelHeight = 12;
     const pixelWidth = 12;
+    const moves = {
+        pawn: [[1,0],[-1,0],[0,-1],[0,1]],
+        knight: [[2,2],[1,1],[-2,-2],[-1,-1],[-2,2],[-1,1],[2,-2],[1,-1]],
+        king: [],
+        queen: [],
+        rook: [[2, 2], [1,1], [0,2], [-1, 1], [-2, 2], [2, 0], [-2, 0], [2, -2], [1, -1], [0, -2], [-1, -1], [-2, -2]],
+        bishop: [[0, 1], [0, 2], [0, -1], [0, -2], [1, 0], [-1, 0]]
+
+    }
     let tempBoard = [...Array(pixelWidth)].map(_=>Array(pixelHeight).fill(''));
     const set = {0: {king: '♔', queen: '♕', knight: '♘', bishop: '♗', rook: '♖', pawn: '♙'}, [pixelHeight-1]: {king: '♚', queen: '♛', knight: '♞', bishop: '♝', rook: '♜', pawn: '♟'}}
     for(let i = 0; i < pixelWidth; i++)
@@ -25,8 +34,7 @@ export default function FunnyChess(props) {
         if(j==0)tempBoard[center-3][Math.ceil(pixelHeight/2)] = set[j].rook; else tempBoard[center+3][Math.ceil(pixelHeight/2)] = set[j].rook; 
     }
     const [board, updateBoard] = useState(tempBoard);
-    const [selectedBoard, updateSelected] = useState([[...Array(pixelWidth)].map(_=>Array(pixelHeight).fill(false)), false])
-    let turn = 1;
+    const [selectedBoard, updateSelected] = useState([[...Array(pixelWidth)].map(_=>Array(pixelHeight).fill(false)), [0,0], false]) // selected array, whether in selection phase, original piece location
 
 
     let selectPiece = (i, j) => {
@@ -34,21 +42,17 @@ export default function FunnyChess(props) {
         switch(board[i][j]){
             case set[0].pawn: // pawn can only move 1 space in cardinal direction (NSEW)
             case set[pixelHeight-1].pawn:
-                newSelectedBoard[i+1][j]=true;
-                newSelectedBoard[i-1][j]=true;
-                newSelectedBoard[i][j+1]=true;
-                newSelectedBoard[i][j-1]=true;
+                for(let move of moves.pawn){
+                    if(i+move[0] >= 0 && i+move[0] < pixelWidth && j+move[1] >= 0 && j+move[1] < pixelHeight)
+                        newSelectedBoard[i+move[0]][j+move[1]] = true;
+                }
                 break;
             case set[0].knight: // knights can move 2 spaces diagonal
             case set[pixelHeight-1].knight:
-                newSelectedBoard[i+2][j+2]=true;
-                newSelectedBoard[i+1][j+1]=true;
-                newSelectedBoard[i-2][j-2]=true;
-                newSelectedBoard[i-1][j-1]=true;
-                newSelectedBoard[i-2][j+2]=true;
-                newSelectedBoard[i-1][j+1]=true;
-                newSelectedBoard[i+2][j-2]=true;
-                newSelectedBoard[i+1][j-1]=true;
+                for(let move of moves.knight){
+                    if(i+move[0] >= 0 && i+move[0] < pixelWidth && j+move[1] >= 0 && j+move[1] < pixelHeight)
+                        newSelectedBoard[i+move[0]][j+move[1]] = true;
+                }
                 break;
             case set[0].king:
             case set[pixelHeight-1].king: // king cant move
@@ -67,36 +71,48 @@ export default function FunnyChess(props) {
                 X-O-X-O-X
                 Rook can move to any X's
             */ 
-                newSelectedBoard[i+2][j+2]=true
-                newSelectedBoard[i+1][j+1]=true
-                newSelectedBoard[i][j+2]=true
-                newSelectedBoard[i-1][j+1]=true
-                newSelectedBoard[i-2][j+2]=true
-                newSelectedBoard[i+2][j]=true
-                newSelectedBoard[i-2][j]=true
-                newSelectedBoard[i+2][j-2]=true
-                newSelectedBoard[i+1][j-1]=true
-                newSelectedBoard[i][j-2]=true
-                newSelectedBoard[i-1][j-1]=true
-                newSelectedBoard[i-2][j-2]=true
+                for(let move of moves.rook){
+                    if(i+move[0] >= 0 && i+move[0] < pixelWidth && j+move[1] >= 0 && j+move[1] < pixelHeight)
+                        newSelectedBoard[i+move[0]][j+move[1]] = true;
+                }
+
                 break;
             case set[pixelHeight-1].bishop:
             case set[0].bishop: // Has a spin attack (kills any pieces adjacent to it when moving, moved 2 spaces forward or backwards, or 1 space left or right)
-                newSelectedBoard[i][j+1]=true;
-                newSelectedBoard[i][j+2]=true;
-                newSelectedBoard[i][j-1]=true;
-                newSelectedBoard[i][j-2]=true;
-                newSelectedBoard[i+1][j]=true;
-                newSelectedBoard[i-1][j]=true;
-                break; 
+                for(let move of moves.bishop){
+                    if(i+move[0] >= 0 && i+move[0] < pixelWidth && j+move[1] >= 0 && j+move[1] < pixelHeight)
+                        newSelectedBoard[i+move[0]][j+move[1]] = true;
+                }
+                break;
         }
-        updateSelected([newSelectedBoard, true]); // set to true to say next click will be actually moving piece
+        updateSelected([newSelectedBoard, [i,j], selectedBoard[2]]); // set to true to say next click will be actually moving piece
     }
 
-
+    let movePiece = (from, to) => {
+        let newBoard = [...board];
+        let check = [...from];
+        let piece = board[from[0]][from[1]];
+        console.log(`Displacement: [${to[0] - from[0]}, ${to[1] - from[1]}]`)
+        if(!['♕', '♛'].includes(piece))
+            while(check[0] != to[0] && check[1] != to[0]){
+                console.log(check)
+                if(Object.values(set[!selectedBoard[2] ? 0 : (pixelHeight-1)]).includes(board[check[0]][check[1]])) newBoard[check[0]][check[1]] = '';
+                check[0] = check[0] + ((to[0] - from[0]) > 0 ? 1 : -1);
+                check[1] = check[1] + ((to[1] - from[1]) > 0 ? 1 : -1);
+            }
+        newBoard[to[0]][to[1]] = piece;
+        newBoard[from[0]][from[1]] = '';
+        updateBoard(newBoard);
+    }
 
     let clicked = (i, j) => {
-        selectPiece(i, j);
+        console.log(`clicked [${i}, ${j}]`)
+        if(board[i][j] == '' && selectedBoard[0][i][j]){
+            movePiece(selectedBoard[1], [i, j])
+            updateSelected([[...Array(pixelWidth)].map(_=>Array(pixelHeight).fill(false)), [0,0], !selectedBoard[2]]);
+        }
+        else if(Object.values(set[selectedBoard[2] ? 0 : (pixelHeight-1)]).includes(board[i][j]))
+            selectPiece(i, j);
     }
 
     let visualBoard = []
