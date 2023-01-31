@@ -1,16 +1,24 @@
 {
   "files": {
-    "main.css": "/personal-website/static/css/main.073c9b0a.css",
-    "main.js": "/personal-website/static/js/main.2027f42b.js",
+    "main.css": "/personal-website/static/css/main.e2bdd589.css",
+    "main.js": "/personal-website/static/js/main.3f2e445a.js",
     "static/js/787.5809834d.chunk.js": "/personal-website/static/js/787.5809834d.chunk.js",
+    "static/media/fc2.png": "/personal-website/static/media/fc2.b30628ae4f39d36c2e12.png",
+    "static/media/Walmartragdoll.PNG": "/personal-website/static/media/Walmartragdoll.f277b8c7e1f7f0791220.PNG",
+    "static/media/crackspy.jpg": "/personal-website/static/media/crackspy.ef699aa6bf8901850702.jpg",
+    "static/media/me.jpg": "/personal-website/static/media/me.ef6ae4ea5448955bae88.jpg",
+    "static/media/wraithicon.png": "/personal-website/static/media/wraithicon.3ada12e5c6bb7270302c.png",
+    "static/media/PyroIcon.png": "/personal-website/static/media/PyroIcon.b7a3549c0a7c79591873.png",
+    "static/media/StarbucksIcon.png": "/personal-website/static/media/StarbucksIcon.ee707766465dd91ce5a4.png",
+    "static/media/MinecraftRegular-Bmg3.otf": "/personal-website/static/media/MinecraftRegular-Bmg3.82ba08919dc2add9422f.otf",
     "static/media/logo.svg": "/personal-website/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
     "index.html": "/personal-website/index.html",
-    "main.073c9b0a.css.map": "/personal-website/static/css/main.073c9b0a.css.map",
-    "main.2027f42b.js.map": "/personal-website/static/js/main.2027f42b.js.map",
+    "main.e2bdd589.css.map": "/personal-website/static/css/main.e2bdd589.css.map",
+    "main.3f2e445a.js.map": "/personal-website/static/js/main.3f2e445a.js.map",
     "787.5809834d.chunk.js.map": "/personal-website/static/js/787.5809834d.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.073c9b0a.css",
-    "static/js/main.2027f42b.js"
+    "static/css/main.e2bdd589.css",
+    "static/js/main.3f2e445a.js"
   ]
 }
