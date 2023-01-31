@@ -100,6 +100,11 @@ export default function FunnyChess(props) {
                 check[0] = check[0] + ((to[0] - from[0]) > 0 ? 1 : -1);
                 check[1] = check[1] + ((to[1] - from[1]) > 0 ? 1 : -1);
             }
+        if(['♗', '♝'].includes(piece))
+            for(let i = to[0]-1; i <= to[0]+1; i++)
+                for(let j = to[1]-1; j <= to[1]+1; j++)
+                    if(i >= 0 && i < pixelWidth && j >= 0 & j < pixelHeight)
+                        newBoard[i][j] = ''
         newBoard[to[0]][to[1]] = piece;
         newBoard[from[0]][from[1]] = '';
         updateBoard(newBoard);
