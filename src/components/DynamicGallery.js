@@ -5,7 +5,7 @@ import { Box } from "@mui/system";
 import { useSpring, animated } from '@react-spring/web';
 import { useDrag } from '@use-gesture/react';
 import { useState } from 'react'
-import { crackspy,fc2,PyroIcon,StarbucksIcon,Walmartragdoll,wraithicon } from '../resources/images/index.js'
+import { crackspy,fc2,PyroIcon,StarbucksIcon,Walmartragdoll,wraithicon, campus1, campus2, campus3, campus4, logo } from '../resources/images/index.js'
 import LunchDiningOutlinedIcon from '@mui/icons-material/LunchDiningOutlined';
 import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined';
 import CodeOutlinedIcon from '@mui/icons-material/CodeOutlined';
@@ -23,14 +23,14 @@ export default function DynamicGallery(props){
 
     const imageSet = {
         languages: [],
-        education: [],
+        education: [logo, campus1, campus2, campus3, campus4],
         hobbies: [],
         pets: [],
         food: [],
         test: [crackspy, fc2, PyroIcon, StarbucksIcon, Walmartragdoll, wraithicon],
     }
     const images = (
-        imageSet[currentSet].map((image) => (<img style={{marginLeft: '3vw', width: `${height/3}vw`, height: '17vh', borderRadius: '20px', borderStyle: 'solid', borderWidth: '2px 5px 7px 2px', borderColor: 'black'}} src={image} draggable={false}></img>))
+        imageSet[currentSet].map((image) => (<img style={{marginLeft: '3vw', width: `${height/3}vw`, height: '17vh', borderRadius: '20px', borderStyle: 'solid', borderWidth: '2px 5px 7px 2px', borderColor: 'black', backgroundColor: 'white'}} src={image} draggable={false}></img>))
     )
     
     const radioButton = {
@@ -69,11 +69,11 @@ export default function DynamicGallery(props){
                 Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis quae, nesciunt odit numquam qui provident quisquam iusto dolores, minima fuga id voluptatem earum quos veniam error aliquam, porro voluptas impedit vel tempore natus eos possimus. Ad incidunt, quibusdam dicta, inventore delectus reprehenderit dolorum velit quo esse maxime molestiae ducimus sed deleniti eaque similique soluta deserunt sint veniam porro. Laudantium, libero ab. Quis eveniet fuga possimus non magni, repudiandae cupiditate quaerat animi dignissimos nam doloribus consequatur asperiores culpa, exercitationem ex! Obcaecati quae expedita nobis, consequatur sed mollitia laborum voluptatem quam impedit commodi deleniti maxime qui possimus architecto rem. Neque, autem aperiam?    
             </p>
             <Grid container alignItems="center" justifyContent="center" sx={{marginBottom:'10px'}}>
-                <Grid item xs={2}><Button sx={{...radioButton}}><CodeOutlinedIcon sx={{fontSize: '50px'}} style={{color: 'black'}}/></Button></Grid>
-                <Grid item xs={2}><Button sx={{...radioButton}}><SchoolOutlinedIcon sx={{fontSize: '50px'}} style={{color: 'black'}}/></Button></Grid>
-                <Grid item xs={2}><Button sx={{...radioButton}}><PedalBikeOutlinedIcon sx={{fontSize: '50px'}} style={{color: 'black'}}/></Button></Grid>
-                <Grid item xs={2}><Button sx={{...radioButton}}><PetsIcon sx={{fontSize: '50px'}} style={{color: 'black'}}/></Button></Grid>
-                <Grid item xs={2}><Button sx={{...radioButton}}><LunchDiningOutlinedIcon sx={{fontSize: '50px'}} style={{color: 'black'}}/></Button></Grid>
+                <Grid item xs={2}><Button onClick={() => {changeSet('education')}} sx={{...radioButton}}><SchoolOutlinedIcon sx={{fontSize: '50px'}} style={{color: 'black'}}/></Button></Grid>
+                <Grid item xs={2}><Button onClick={() => {changeSet('languages')}} sx={{...radioButton}}><CodeOutlinedIcon sx={{fontSize: '50px'}} style={{color: 'black'}}/></Button></Grid>
+                <Grid item xs={2}><Button onClick={() => {changeSet('hobbies')}} sx={{...radioButton}}><PedalBikeOutlinedIcon sx={{fontSize: '50px'}} style={{color: 'black'}}/></Button></Grid>
+                <Grid item xs={2}><Button onClick={() => {changeSet('pets')}} sx={{...radioButton}}><PetsIcon sx={{fontSize: '50px'}} style={{color: 'black'}}/></Button></Grid>
+                <Grid item xs={2}><Button onClick={() => {changeSet('food')}} sx={{...radioButton}}><LunchDiningOutlinedIcon sx={{fontSize: '50px'}} style={{color: 'black'}}/></Button></Grid>
             </Grid>
 
             <div>

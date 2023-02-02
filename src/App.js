@@ -2,7 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import Terminal from "./components/Terminal"
 import me from './resources/images/me.jpg' 
-import {Button, Grid, Divider} from '@mui/material'
+import {Box, Button, Grid, Divider} from '@mui/material'
 import DynamicGallery from './components/DynamicGallery';
 import FunnyChess from './components/FunnyChess';
 import TerminalShowcase from './components/Showcases/TerminalShowcase';
@@ -15,13 +15,13 @@ function App() {
                 <div id="welcome-text">
                     <h6>Redo this in spring!</h6>
                 </div>
-                <div id="navbar-contents" >
-                    <a href="#about-me" class="nav-link">About me</a>
-                    <a href="#experience" class="nav-link">Experience</a>
-                    <a href="#projects" class="nav-link">Projects</a>
-                    <a href="#contact" class="nav-link">Contact</a>
-                    <a href="#top" class="nav-link">Back to Top!</a>
-                </div>
+                <Box xs={{display: 'flex', flexDirection: 'row'}} id="navbar-contents" >
+                    <a style={{marginLeft: '1vw'}} href="#about-me" class="nav-link">About me</a>
+                    <a style={{marginLeft: '1vw'}} href="#experience" class="nav-link">Experience</a>
+                    <a style={{marginLeft: '1vw'}} href="#projects" class="nav-link">Projects</a>
+                    <a style={{marginLeft: '1vw'}} href="#contact" class="nav-link">Contact</a>
+                    <a style={{marginLeft: '1vw'}} href="#top" class="nav-link">Back to Top!</a>
+                </Box>
             </div>
             <div id="top"></div>
             <div id="about-me">
@@ -43,8 +43,14 @@ function App() {
                 <Divider variant="middle" sx={{borderBottomWidth: '5px', width: '65vw', margin: '1vh 0px 3vh 17.5vw'}}/>
                 <ChessShowcase/>
             </div>
-            <div id="contact">
-
+            <div id="contact" style={{backgroundColor: 'black', height: '10vh', color: 'white'}}>
+                <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+                    <span style={{margin: '2vh 0px 2vh 0px'}}>Contacts</span>
+                    <Grid container style={{width: '50vw'}}>
+                        <Grid item xs={6}><a href="mailto:trevor.johannessen@gmail.com" style={{color: '#FAF9F6'}}>Email</a></Grid>
+                        <Grid item xs={6}><a href="https://www.linkedin.com/in/trevor-johannessen/" style={{color: '#FAF9F6'}}>LinkedIn</a></Grid>
+                    </Grid>
+                </div>
             </div>
         </div>
     );
