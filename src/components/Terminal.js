@@ -148,19 +148,19 @@ export default function Terminal(props){
         <Button 
         onClick={handleClick}
         disableRipple
-        style={{textTransform: 'none'}}
+        style={{textTransform: 'none', width: '100%', height: '100%'}}
         >
             <Box 
                 sx={{
-                        width: '43vw',
-                        height: '60vh',
+                        width: '100%',
+                        height: '100%',
                         backgroundColor: 'black',
                         border: 25,
                         borderColor: 'yellow',
                         display: 'flex',
                         flexDirection: 'column',
                         color: 'white',
-                        borderRadius: "15px"
+                        borderRadius: "15px",
                     }}
                 style={{textAlign: "left"}}
             >

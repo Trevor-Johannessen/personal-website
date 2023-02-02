@@ -6,12 +6,17 @@ import { useSpring, animated } from '@react-spring/web';
 import { useDrag } from '@use-gesture/react';
 import { useState } from 'react'
 import { crackspy,fc2,PyroIcon,StarbucksIcon,Walmartragdoll,wraithicon } from '../resources/images/index.js'
-
+import LunchDiningOutlinedIcon from '@mui/icons-material/LunchDiningOutlined';
+import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined';
+import CodeOutlinedIcon from '@mui/icons-material/CodeOutlined';
+import PedalBikeOutlinedIcon from '@mui/icons-material/PedalBikeOutlined';
+import PetsIcon from '@mui/icons-material/Pets';
 
 export default function DynamicGallery(props){
     const [currentSet, changeSet] = useState('test');
     const [position, setPosition] = useState(0);
     const height = 30;
+    const width = 60;
     const transition = useSpring({
         to: { transform: `translateX(-${position*4*(height/3+3)}vw)` },
     })
@@ -45,9 +50,6 @@ export default function DynamicGallery(props){
 
     const scrollButtonStyle = {
         width: '6vw',
-        backgroundColor: 'rgb(0, 31, 138)',
-        borderColor: 'black',
-        borderStyle: 'solid',
         height: `${height}vh`,
         display: 'flex',        
         alignItems: 'center',
@@ -62,20 +64,23 @@ export default function DynamicGallery(props){
     }
 
     return(
-        <Box>
-            <Grid container alignItems="center" justifyContent="center">
-                <Grid item xs={2}><Button sx={{...radioButton}}></Button></Grid>
-                <Grid item xs={2}><Button sx={{...radioButton}}></Button></Grid>
-                <Grid item xs={2}><Button sx={{...radioButton}}></Button></Grid>
-                <Grid item xs={2}><Button sx={{...radioButton}}></Button></Grid>
-                <Grid item xs={2}><Button sx={{...radioButton}}></Button></Grid>
+        <Box style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+            <p id="about-paragraph">
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis quae, nesciunt odit numquam qui provident quisquam iusto dolores, minima fuga id voluptatem earum quos veniam error aliquam, porro voluptas impedit vel tempore natus eos possimus. Ad incidunt, quibusdam dicta, inventore delectus reprehenderit dolorum velit quo esse maxime molestiae ducimus sed deleniti eaque similique soluta deserunt sint veniam porro. Laudantium, libero ab. Quis eveniet fuga possimus non magni, repudiandae cupiditate quaerat animi dignissimos nam doloribus consequatur asperiores culpa, exercitationem ex! Obcaecati quae expedita nobis, consequatur sed mollitia laborum voluptatem quam impedit commodi deleniti maxime qui possimus architecto rem. Neque, autem aperiam?    
+            </p>
+            <Grid container alignItems="center" justifyContent="center" sx={{marginBottom:'10px'}}>
+                <Grid item xs={2}><Button sx={{...radioButton}}><CodeOutlinedIcon sx={{fontSize: '50px'}} style={{color: 'black'}}/></Button></Grid>
+                <Grid item xs={2}><Button sx={{...radioButton}}><SchoolOutlinedIcon sx={{fontSize: '50px'}} style={{color: 'black'}}/></Button></Grid>
+                <Grid item xs={2}><Button sx={{...radioButton}}><PedalBikeOutlinedIcon sx={{fontSize: '50px'}} style={{color: 'black'}}/></Button></Grid>
+                <Grid item xs={2}><Button sx={{...radioButton}}><PetsIcon sx={{fontSize: '50px'}} style={{color: 'black'}}/></Button></Grid>
+                <Grid item xs={2}><Button sx={{...radioButton}}><LunchDiningOutlinedIcon sx={{fontSize: '50px'}} style={{color: 'black'}}/></Button></Grid>
             </Grid>
 
-            {/* finish this tutorial at some point: https://www.youtube.com/watch?v=FFUUhYhxh5Q */}
             <div>
                 <div style={{
                     display: 'flex', 
                     flexDirection: 'row',
+                    width: `${width}vw`,
                     height: `${height}vh`,
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -86,7 +91,7 @@ export default function DynamicGallery(props){
                     backgroundColor: '#172A3A',
                 }}
                 >
-                    <Button style={{...scrollButtonStyle, borderWidth: '0px 3px 0px 0px', borderRadius: '25px 0px 0px 25px',}} onClick={() => handleScroll(-1)}>
+                    <Button style={{...scrollButtonStyle}} onClick={() => handleScroll(-1)}>
                         <ArrowBackIosNewIcon style={{width: '3vw', height: '3vw', color:'rgba(157, 161, 162, .8)'}}/>
                     </Button>
                     <div style={{
@@ -100,12 +105,14 @@ export default function DynamicGallery(props){
                             height: `${height*.8}vh`,
                             position: 'relative',
                             float: 'left',
+                            justifyContent: 'center',
+                            alignItems: 'center',
                         }}
                         >
                             {images}
                         </animated.div>
                     </div>
-                    <Button style={{...scrollButtonStyle, borderWidth: '0px 0px 0px 3px', borderRadius: '0px 25px 25px 0px',}}  onClick={() => handleScroll(1)}>
+                    <Button style={{...scrollButtonStyle, }}  onClick={() => handleScroll(1)}>
                         <ArrowForwardIosIcon style={{width: '3vw', height: '3vw', color:'rgba(157, 161, 162, .8)'}}/>
                     </Button>
                 </div>

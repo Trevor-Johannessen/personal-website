@@ -1,10 +1,10 @@
 import { setSelectionRange } from '@testing-library/user-event/dist/utils';
 import {useState} from 'react'
 export default function FunnyChess(props) {
-    const width = 30;
-    const height = 30;
     const pixelHeight = 12;
     const pixelWidth = 12;
+    const width = props.width + Number(props.width) % pixelWidth;
+    const height = props.height + Number(props.height) % pixelHeight;
     const moves = {
         pawn: [[1,0],[-1,0],[0,-1],[0,1]],
         knight: [[2,2],[1,1],[-2,-2],[-1,-1],[-2,2],[-1,1],[2,-2],[1,-1]],
@@ -124,10 +124,11 @@ export default function FunnyChess(props) {
     for(let j = 0; j < pixelHeight; j++){
         let row = []
         for(let i = 0; i < pixelWidth; i++)
-            row.push((<div onClick={() => clicked(i, j)} style={{width: `${width/pixelWidth}vw`, height: `${height/pixelHeight}vh`, backgroundColor: selectedBoard[0][i][j] ? 'yellow' : (i%2+j)%2 == 0 ? 'tan' : 'brown'}}>{board[i][j] != 0 ? board[i][j] : ''}</div>))
-        visualBoard.push([(<div style={{display: 'flex', flexDirection: 'row'}}>{row}</div>)])    
+            row.push((<div onClick={() => clicked(i, j)} style={{flex: 1, backgroundColor: selectedBoard[0][i][j] ? 'yellow' : (i%2+j)%2 == 0 ? 'tan' : 'brown'}}>{board[i][j] != 0 ? board[i][j] : ''}</div>))
+        visualBoard.push([(<div style={{display: 'flex', flexDirection: 'row', flex: 1, justifyContent: 'space-evenly'}}>{row}</div>)])    
     }
-    return (<div>
+
+    return (<div style={{display: 'flex', flexDirection: 'column', justifyContent:'space-evenly', borderColor: 'black', borderRadius:'5px', borderStyle: 'solid', borderwidth: '4px', width: `${width}vw`, height: `${height}`}}>
             {visualBoard}
         </div>)
 }   
