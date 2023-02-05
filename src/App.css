@@ -135,14 +135,12 @@
 
 
 #about-me {
-  height: 95vh;
+  margin: '50px 0px 50px 0px';
   background-color: rgba(3, 252, 127, .5);
 }
 
 #about-picture {
   border-radius: 8px;
-  width: 11vw;
-  height: 30vh;
   object-fit: cover;
   border-color: black;
   border-width: 2px;

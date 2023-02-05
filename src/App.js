@@ -27,10 +27,10 @@ function App() {
             <div id="about-me">
                 <h1 style={{margin: '0px'}}>Welcome to my website!</h1>
                 <Grid container direction="row">
-                    <Grid item xs={4} id="about-picture-container">
-                    <img src={me} id="about-picture"/>
+                    <Grid item xs={12} sm={4} sx={{width: {xs: '80vw', sm: '11vw'}, height: {xs:'90vh', sm: '30vh'}}} id="about-picture-container">
+                        <img src={me} id="about-picture"/>
                     </Grid>
-                    <Grid item xs={8} >
+                    <Grid item sm={8} xs={12}>
                         <DynamicGallery/>
                     </Grid>
                 </Grid>

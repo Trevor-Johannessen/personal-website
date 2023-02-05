@@ -18,7 +18,7 @@ export default function DynamicGallery(props){
     const height = 30;
     const width = 60;
     const transition = useSpring({
-        to: { transform: `translateX(-${position*4*(height/3+3)}vw)` },
+        to: { transform: `translateX(-${position*(height/3+3)}vw)` },
     })
 
     const imageSet = {
@@ -29,8 +29,21 @@ export default function DynamicGallery(props){
         food: [],
         test: [crackspy, fc2, PyroIcon, StarbucksIcon, Walmartragdoll, wraithicon],
     }
+
+    const imageStyle = {
+        marginLeft: '3vw',
+        width: {xs: `${height/2}vw`, md: `${height/3}vw`},
+        height: '17vh',
+        borderRadius: '20px',
+        borderStyle: 'solid',
+        borderWidth: '2px 5px 7px 2px',
+        borderColor: 'black',
+        backgroundColor: 'white',
+    }
+
+
     const images = (
-        imageSet[currentSet].map((image) => (<img style={{marginLeft: '3vw', width: `${height/3}vw`, height: '17vh', borderRadius: '20px', borderStyle: 'solid', borderWidth: '2px 5px 7px 2px', borderColor: 'black', backgroundColor: 'white'}} src={image} draggable={false}></img>))
+        imageSet[currentSet].map((image) => (<img style={{...imageStyle}} src={image} draggable={false}></img>))
     )
     
     const radioButton = {
@@ -40,16 +53,27 @@ export default function DynamicGallery(props){
         borderColor: '#2F2F2F',
         backgroundColor: '#EEE5E9',
         borderRadius: '50%',
-        height: '6rem',
-        width: '6rem',
+        height: {xs: '3rem', md:'6rem'},
+        width: {xs: '3rem', md:'6rem'},
+        minWidth: '0px',
         '&:hover': {
             backgroundColor: '#2F2F2F',
             borderColor: '#EEE5E9',
         }
     }
 
+    const iconStyle = {
+        fontSize: '50px',
+        color: 'black',
+        width: '80%',
+        height: '80%',
+        margin: '0px 0px 0px 0px',
+        padding: '0px 0px 0px 0px',
+    }
+
     const scrollButtonStyle = {
-        width: '6vw',
+        width: {xs: '10vw', md: '5vw'},
+        minWidth: {xs: '10vw', md: '5vw'},
         height: `${height}vh`,
         display: 'flex',        
         alignItems: 'center',
@@ -58,7 +82,7 @@ export default function DynamicGallery(props){
 
     const handleScroll = (direction) => {
         console.log(`direction = ${direction}`)
-        if(position+direction > -1 && 4*(position+direction) <= imageSet[currentSet].length)
+        if(position+direction > -1 && (position+direction) <= imageSet[currentSet].length)
             setPosition(position + direction);
         
     }
@@ -68,19 +92,19 @@ export default function DynamicGallery(props){
             <p id="about-paragraph">
                 Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis quae, nesciunt odit numquam qui provident quisquam iusto dolores, minima fuga id voluptatem earum quos veniam error aliquam, porro voluptas impedit vel tempore natus eos possimus. Ad incidunt, quibusdam dicta, inventore delectus reprehenderit dolorum velit quo esse maxime molestiae ducimus sed deleniti eaque similique soluta deserunt sint veniam porro. Laudantium, libero ab. Quis eveniet fuga possimus non magni, repudiandae cupiditate quaerat animi dignissimos nam doloribus consequatur asperiores culpa, exercitationem ex! Obcaecati quae expedita nobis, consequatur sed mollitia laborum voluptatem quam impedit commodi deleniti maxime qui possimus architecto rem. Neque, autem aperiam?    
             </p>
-            <Grid container alignItems="center" justifyContent="center" sx={{marginBottom:'10px'}}>
-                <Grid item xs={2}><Button onClick={() => {changeSet('education')}} sx={{...radioButton}}><SchoolOutlinedIcon sx={{fontSize: '50px'}} style={{color: 'black'}}/></Button></Grid>
-                <Grid item xs={2}><Button onClick={() => {changeSet('languages')}} sx={{...radioButton}}><CodeOutlinedIcon sx={{fontSize: '50px'}} style={{color: 'black'}}/></Button></Grid>
-                <Grid item xs={2}><Button onClick={() => {changeSet('hobbies')}} sx={{...radioButton}}><PedalBikeOutlinedIcon sx={{fontSize: '50px'}} style={{color: 'black'}}/></Button></Grid>
-                <Grid item xs={2}><Button onClick={() => {changeSet('pets')}} sx={{...radioButton}}><PetsIcon sx={{fontSize: '50px'}} style={{color: 'black'}}/></Button></Grid>
-                <Grid item xs={2}><Button onClick={() => {changeSet('food')}} sx={{...radioButton}}><LunchDiningOutlinedIcon sx={{fontSize: '50px'}} style={{color: 'black'}}/></Button></Grid>
+            <Grid container alignItems="center" justifyContent="center" sx={{marginLeft: '0px', marginBottom:'10px'}} spacing={5}>
+                <Grid item style={{paddingLeft: '0vw'}} xs={2}><Button onClick={() => {changeSet('education')}} sx={{...radioButton}}><SchoolOutlinedIcon sx={{...iconStyle}}/></Button></Grid>
+                <Grid item style={{paddingLeft: '0vw'}} xs={2}><Button onClick={() => {changeSet('languages')}} sx={{...radioButton}}><CodeOutlinedIcon sx={{...iconStyle}}/></Button></Grid>
+                <Grid item style={{paddingLeft: '0vw'}} xs={2}><Button onClick={() => {changeSet('hobbies')}} sx={{...radioButton}}><PedalBikeOutlinedIcon sx={{...iconStyle}}/></Button></Grid>
+                <Grid item style={{paddingLeft: '0vw'}} xs={2}><Button onClick={() => {changeSet('pets')}} sx={{...radioButton}}><PetsIcon sx={{...iconStyle}}/></Button></Grid>
+                <Grid item style={{paddingLeft: '0vw'}} xs={2}><Button onClick={() => {changeSet('food')}} sx={{...radioButton}}><LunchDiningOutlinedIcon sx={{...iconStyle}}/></Button></Grid>
             </Grid>
 
             <div>
-                <div style={{
+                <Box sx={{
                     display: 'flex', 
                     flexDirection: 'row',
-                    width: `${width}vw`,
+                    width: {xs: `${width*1.5}vw`, md: `${width}vw`},
                     height: `${height}vh`,
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -91,8 +115,8 @@ export default function DynamicGallery(props){
                     backgroundColor: '#172A3A',
                 }}
                 >
-                    <Button style={{...scrollButtonStyle}} onClick={() => handleScroll(-1)}>
-                        <ArrowBackIosNewIcon style={{width: '3vw', height: '3vw', color:'rgba(157, 161, 162, .8)'}}/>
+                    <Button sx={{...scrollButtonStyle}} onClick={() => handleScroll(-1)}>
+                        <ArrowBackIosNewIcon sx={{width: '3vw', height: '3vw', color:'rgba(157, 161, 162, .8)'}}/>
                     </Button>
                     <div style={{
                         height: `${height*.8}vh`,
@@ -100,6 +124,7 @@ export default function DynamicGallery(props){
                     }}>
                         <animated.div style={{
                             ...transition,
+                            zIndex: 0,
                             display: 'flex', 
                             flexDirection: 'row', 
                             height: `${height*.8}vh`,
@@ -112,10 +137,10 @@ export default function DynamicGallery(props){
                             {images}
                         </animated.div>
                     </div>
-                    <Button style={{...scrollButtonStyle, }}  onClick={() => handleScroll(1)}>
-                        <ArrowForwardIosIcon style={{width: '3vw', height: '3vw', color:'rgba(157, 161, 162, .8)'}}/>
+                    <Button sx={{...scrollButtonStyle, }}  onClick={() => handleScroll(1)}>
+                        <ArrowForwardIosIcon sx={{width: '3vw', height: '3vw', color:'rgba(157, 161, 162, .8)'}}/>
                     </Button>
-                </div>
+                </Box>
             </div>
         </Box>
     )
