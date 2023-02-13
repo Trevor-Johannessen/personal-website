@@ -1,14 +1,32 @@
+import {useEffect, useState} from 'react'
+import $, { timers } from 'jquery'
 import logo from './logo.svg';
 import './App.css';
 import Terminal from "./components/Terminal"
-import me from './resources/images/me.jpg' 
 import {Box, Button, Grid, Divider} from '@mui/material'
 import DynamicGallery from './components/DynamicGallery';
 import FunnyChess from './components/FunnyChess';
 import TerminalShowcase from './components/Showcases/TerminalShowcase';
 import ChessShowcase from './components/Showcases/ChessShowcase';
+import MyImage from './components/MyImage';
 
 function App() {
+    const [ip, setIP] = useState(0);
+    useEffect(() => {
+
+
+
+
+        // I was going to use this to ban my friend from accessing my website, but it would require publically
+        // posting her IP to github so I cannot do that at this time.
+        // $.getJSON("https://api.ipify.org?format=json", function(data) {
+        //     setIP(data.ip);
+        // })
+    })
+
+
+
+
     return (
         <div className="App">
             <div id="banner" style={{position: 'sticky'}}>
@@ -28,7 +46,7 @@ function App() {
                 <h1 style={{margin: '0px'}}>Welcome to my website!</h1>
                 <Grid container direction="row">
                     <Grid item xs={12} sm={4} sx={{width: {xs: '80vw', sm: '11vw'}, height: {xs:'90vh', sm: '30vh'}}} id="about-picture-container">
-                        <img src={me} id="about-picture"/>
+                        <MyImage/>
                     </Grid>
                     <Grid item sm={8} xs={12}>
                         <DynamicGallery/>
