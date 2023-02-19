@@ -9,6 +9,7 @@ import FunnyChess from './components/FunnyChess';
 import TerminalShowcase from './components/Showcases/TerminalShowcase';
 import ChessShowcase from './components/Showcases/ChessShowcase';
 import MyImage from './components/MyImage';
+import MusicKitRequest from './components/MusicKitRequest';
 
 function App() {
     const [ip, setIP] = useState(0);
@@ -34,11 +35,11 @@ function App() {
                     <h6>Redo this in spring!</h6>
                 </div>
                 <Box xs={{display: 'flex', flexDirection: 'row'}} id="navbar-contents" >
-                    <a style={{marginLeft: '1vw'}} href="#about-me" class="nav-link">About me</a>
-                    <a style={{marginLeft: '1vw'}} href="#experience" class="nav-link">Experience</a>
-                    <a style={{marginLeft: '1vw'}} href="#projects" class="nav-link">Projects</a>
-                    <a style={{marginLeft: '1vw'}} href="#contact" class="nav-link">Contact</a>
-                    <a style={{marginLeft: '1vw'}} href="#top" class="nav-link">Back to Top!</a>
+                    <a style={{marginLeft: '1vw'}} href="#about-me" className="nav-link">About me</a>
+                    <a style={{marginLeft: '1vw'}} href="#experience" className="nav-link">Experience</a>
+                    <a style={{marginLeft: '1vw'}} href="#projects" className="nav-link">Projects</a>
+                    <a style={{marginLeft: '1vw'}} href="#contact" className="nav-link">Contact</a>
+                    <a style={{marginLeft: '1vw'}} href="#top" className="nav-link">Back to Top!</a>
                 </Box>
             </div>
             <div id="top"></div>
@@ -60,6 +61,9 @@ function App() {
                 <TerminalShowcase />
                 <Divider variant="middle" sx={{borderBottomWidth: '5px', width: '65vw', margin: '1vh 0px 3vh 17.5vw'}}/>
                 <ChessShowcase/>
+            </div>
+            <div id="music">
+                <MusicKitRequest height='80vh'/>
             </div>
             <div id="contact" style={{backgroundColor: 'black', height: '10vh', color: 'white'}}>
                 <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
