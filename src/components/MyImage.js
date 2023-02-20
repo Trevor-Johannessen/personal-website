@@ -10,24 +10,38 @@ export default function MyImage(props){
         async function asyncGetIP(){
             let imageCode = await api.checkIP();
             setImage(`${imageCode.data}`)
+            console.log(imageCode)
         }
         asyncGetIP();
     }, [])
-    let src;
+
+    let img;
+    const style = {
+        borderRadius: '8px',
+        objectFit: 'cover',
+        borderColor: 'black',
+        borderWidth: '2px',
+        borderStyle: 'solid',
+        borderRadius: '5px',
+        height: '50vh',
+    }
+
     switch(image){
-        case 'none': src=null;
+        case 'none': img=null;
             break;
-        case '0': src=me;
+        case '0': img = <img src={me} style={style}/>;
             break;
-        case '1': src=ED;
+        case '1': img = <img src={ED} style={style}/>;
             break;
-        case '2': src=PyroIcon;
+        case '2': img = <img src={PyroIcon} style={style}/>;
             break;
+        default:
+            img=null;
     }
 
     return (
         <div>
-            {src ? <img src={me} id="about-picture"/> : <div/>}
+            {img ? img : ''}
         </div>
     )
 }

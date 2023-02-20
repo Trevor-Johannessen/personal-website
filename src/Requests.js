@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const api = axios.create({
-    //baseURL: 'https://34.121.14.89:5000',
+    //baseURL: 'https://powerofthegem.com:5000',
     baseURL: 'http://localhost:5000'
 })
 

@@ -3,16 +3,27 @@ import { Box } from '@mui/material';
 import {useState, useEffect} from 'react'
 import api from '../Requests'
 
+/*
+    TODO: 
+        Open card when double clicked
+        Create waiting animation as data is retrieved
+        Display data once loaded.
+*/
+
+
 export default function MusicKitRequest(props){
     const [state, setState] = useState({
         data: [],
+        songs: [],
         cardOpened: -1,
         totalArtists: 1
     })
     const [page, setPage] = useState(0);
+    const [cardOpened, setCardOpened] = useState(-1);
+    // idea restructure everything and use ref to highlight cards blue and expand invisible songspaces under each artist card
 
-    async function modifyPage(dict){
-        console.log("Modifying page");
+
+    function modifyPage(dict){
         let copy = {...state};
         for(let key in dict)
             copy[key] = dict[key];
@@ -21,7 +32,6 @@ export default function MusicKitRequest(props){
 
     useEffect(()=>{
         async function getArtists(){
-            console.log(`page = ${page}`)
             let musicData = await api.getMusicData(page);
             let artists = [];
             if(musicData.status != 200) return; // maybe add error page here 
@@ -30,24 +40,43 @@ export default function MusicKitRequest(props){
                 let artist = data[key]
                 artists.push({name: artist.attributes.name, id: artist.id});
             }
-            console.log(artists);
-            modifyPage({'data': artists, totalArtists: musicData.data.meta.total});
+            modifyPage({'data': artists, totalArtists: musicData.data.meta.total, cardOpened: -1});
         }
         getArtists();
     }, [page])
 
-    const selectCard = (i) => {
-        if(state.cardOpened == i)
-            modifyPage({cardOpened: -1})
-        else 
-        modifyPage({cardOpened: i})
+    async function selectCard(i){
+        if(state.cardOpened == i){
+            //setCardOpened(-1)
+            modifyPage({songs: [], cardOpened: -1});
+        }else{
+            //setCardOpened(i);
+            modifyPage({cardOpened: i, songs: []}) // maybe this will work, maybe it wont... lets see!
+            let requestedSongs = await getSongs(state.data[i].id)
+            modifyPage({songs: requestedSongs, cardOpened: i});
+        }
     }
 
     const flipPage = (i) => {
+        modifyPage({songs: []}); // this probably wont work due to async
         if(Math.ceil(state.totalArtists/25) > page && i > 0)
             setPage(page+1);
         else if(page > 0 && i < 0)
             setPage(page-1);
+    }
+
+    async function getSongs(id){
+        async function asyncGetSongs(){
+            const artistResponse = await api.getArtistData(id);
+            if(artistResponse.status == 200)
+                return artistResponse.data
+            else
+                return [];
+        }
+        let getSongsResult = await asyncGetSongs()
+        console.log(getSongsResult)
+        console.log("Returning")
+        return getSongsResult;
     }
 
     const musicStyle = {
@@ -56,23 +85,54 @@ export default function MusicKitRequest(props){
         width: '100%', 
         height: `${100/state.data.length}%`,
         textAlign:'left',
-        paddingLeft:'5px',
         userSelect: 'none',
     }
 
-    let artistCards = [];
-    for(let i = 0; i < state.data.length; i++){
+    const createArtistCard = (i) => {
         let bgColor = i%2 == 0 ? 'lightgray' : 'white';
         let textColor = 'black';
         if(state.cardOpened == i){bgColor = 'blue'; textColor = 'white';}
-        artistCards.push((
-            <div 
-                style={{...musicStyle, backgroundColor: bgColor, color: textColor}} 
-                onDoubleClick={() => selectCard(i)}
-            >
-                <span>{'>'} {state.data[i].name}</span>
+        return (<div 
+            style={{...musicStyle, backgroundColor: bgColor, color: textColor}} 
+            onDoubleClick={() => selectCard(i)}
+        >
+            <span style={{paddingLeft:'5px',}}>{state.cardOpened == i ? 'v' : '>'} {state.data[i].name}</span>
+        </div>)
+    }
+
+    const createSongCards = () => {
+        const header = (
+            <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly'}}>
+                <span>Title</span>
+                <span>Time</span>
+                <span>Artist</span>
+                <span>Album</span>
+                <span>Genre</span>
+                <span>Date Released</span>
+            </div>
+        )
+        let songs = state.songs.map((song) => (
+            <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly'}}>
+                <span>{song.name}</span>
+                <span>{song.duration}</span>
+                <span>{song.artist}</span>
+                <span>{song.album}</span>
+                <span>{song.genres}</span>
+                <span>{song.dateReleased}</span>
             </div>
         ))
+        return [header, ...songs];
+    }
+
+    let cards = [];
+    for(let i = 0; i < state.data.length; i++){
+        if(state.cardOpened == i){
+            cards.push(createArtistCard(i))
+            cards.push(createSongCards())
+        }
+        else{
+            cards.push(createArtistCard(i))
+        }
     }
 
     const iconStyle={
@@ -109,12 +169,12 @@ export default function MusicKitRequest(props){
                 <PlayArrow style={iconStyle}/>
                 <FastForward style={iconStyle} onClick={() => flipPage(1)}/>
                 <Box style={nowPlayingStyle}>
-                    <span style={{height:'95%', display:'inline-flex', alignItems:'center'}}>{state.data[page.cardOpened] != undefined ? state.data[state.cardOpened].name : ''}</span>
+                    <span style={{height:'95%', display:'inline-flex', alignItems:'center'}}>{state.data[state.cardOpened] != undefined ? state.data[state.cardOpened].name : ''}</span>
                     <div style={barStyle}></div>
                 </Box>
             </Box>
-            <Box style={{display: 'flex', flexDirection: 'column', height: '92%', overflow: 'scroll',}}>
-                {artistCards}
+            <Box style={{display: 'flex', flexDirection: 'column', height: '92%', overflowY: 'scroll', overflowX: 'hidden'}}>
+                {cards}
             </Box>
         </Box>
     )
