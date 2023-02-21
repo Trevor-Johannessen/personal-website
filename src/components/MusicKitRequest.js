@@ -5,9 +5,10 @@ import api from '../Requests'
 
 /*
     TODO: 
-        -Preload adjacent artist pages to make clickthrough smoother
         -Add search
-        -Format song card
+        -Add buffer inbetween columns so long text doesnt truncate right next to the next column (See ELO)
+        -Convert time to proper format
+        -Convert date to American
 */
 
 
@@ -45,6 +46,24 @@ export default function MusicKitRequest(props){
         getArtists();
     }, [page])
 
+    // modified https://stackoverflow.com/questions/19700283/how-to-convert-time-in-milliseconds-to-hours-min-sec-format-in-javascript
+    function msToTime(duration) {
+        var milliseconds = Math.floor((duration % 1000) / 100),
+          seconds = Math.floor((duration / 1000) % 60),
+          minutes = Math.floor((duration / (1000 * 60)) % 60),
+          hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+      
+        hours = (hours < 10) ? "0" + hours : hours;
+        minutes = (minutes < 10 && hours != '00') ? "0" + minutes : minutes;
+        seconds = (seconds < 10 && minutes != '00') ? "0" + seconds : seconds;
+      
+        let time = '';
+        time+= hours !== '00' ? `${hours}:` : ''
+        time+= minutes !== '00' ? `${minutes}:` : ''
+        time+= seconds;
+        return time;
+      }
+
     async function selectCard(i){
         if(state.cardOpened == i){
             //setCardOpened(-1)
@@ -58,7 +77,6 @@ export default function MusicKitRequest(props){
     }
 
     const flipPage = (i) => {
-        modifyPage({songs: []}); // this probably wont work due to async
         if(Math.ceil(state.totalArtists/25) > page && i > 0)
             setPage(page+1);
         else if(page > 0 && i < 0)
@@ -121,7 +139,7 @@ export default function MusicKitRequest(props){
             return(
             <Grid container style={{backgroundColor: getCardBackground(), paddingLeft:'3%'}}>
                 <Grid item xs={12} md={3} style={spanStyle}>{song.name}</Grid>
-                <Grid item xs={12} md={1} style={spanStyle}>{song.duration}</Grid>
+                <Grid item xs={12} md={1} style={spanStyle}>{msToTime(song.duration)}</Grid>
                 <Grid item xs={12} md={2} style={spanStyle}>{song.artist}</Grid>
                 <Grid item xs={12} md={3} style={spanStyle}>{song.album}</Grid>
                 <Grid item xs={12} md={1} style={spanStyle}>{song.genres}</Grid>

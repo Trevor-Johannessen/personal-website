@@ -89,9 +89,6 @@ export default function DynamicGallery(props){
 
     return(
         <Box style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-            <p id="about-paragraph">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis quae, nesciunt odit numquam qui provident quisquam iusto dolores, minima fuga id voluptatem earum quos veniam error aliquam, porro voluptas impedit vel tempore natus eos possimus. Ad incidunt, quibusdam dicta, inventore delectus reprehenderit dolorum velit quo esse maxime molestiae ducimus sed deleniti eaque similique soluta deserunt sint veniam porro. Laudantium, libero ab. Quis eveniet fuga possimus non magni, repudiandae cupiditate quaerat animi dignissimos nam doloribus consequatur asperiores culpa, exercitationem ex! Obcaecati quae expedita nobis, consequatur sed mollitia laborum voluptatem quam impedit commodi deleniti maxime qui possimus architecto rem. Neque, autem aperiam?    
-            </p>
             <Grid container alignItems="center" justifyContent="center" sx={{marginLeft: '0px', marginBottom:'10px'}} spacing={5}>
                 <Grid item style={{paddingLeft: '0vw'}} xs={2}><Button onClick={() => {changeSet('education')}} sx={{...radioButton}}><SchoolOutlinedIcon sx={{...iconStyle}}/></Button></Grid>
                 <Grid item style={{paddingLeft: '0vw'}} xs={2}><Button onClick={() => {changeSet('languages')}} sx={{...radioButton}}><CodeOutlinedIcon sx={{...iconStyle}}/></Button></Grid>

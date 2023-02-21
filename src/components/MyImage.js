@@ -44,7 +44,7 @@ export default function MyImage(props){
 
     return (
         <div>
-            {src ? <img src={src} style={style}></img> : ''}
+            {src ? <img src={src} style={style} onDoubleClick={() => setImage('3')}></img> : ''}
         </div>
     )
 }

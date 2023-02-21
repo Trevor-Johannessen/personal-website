@@ -10,6 +10,7 @@ import TerminalShowcase from './components/Showcases/TerminalShowcase';
 import ChessShowcase from './components/Showcases/ChessShowcase';
 import MyImage from './components/MyImage';
 import MusicKitRequest from './components/MusicKitRequest';
+import LinkedText from './components/LinkedText';
 
 function App() {
     const [ip, setIP] = useState(0);
@@ -50,7 +51,11 @@ function App() {
                         <MyImage/>
                     </Grid>
                     <Grid item sm={8} xs={12}>
-                        <DynamicGallery/>
+                        <Grid container>
+                            <Grid item><LinkedText/></Grid>
+                            <Grid item><DynamicGallery/></Grid>
+                        </Grid>
+                        
                     </Grid>
                 </Grid>
             </div>
