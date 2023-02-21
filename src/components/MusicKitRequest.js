@@ -1,13 +1,13 @@
 import { FastForward, FastRewind, PlayArrow } from '@mui/icons-material';
-import { Box } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 import {useState, useEffect} from 'react'
 import api from '../Requests'
 
 /*
     TODO: 
-        Open card when double clicked
-        Create waiting animation as data is retrieved
-        Display data once loaded.
+        -Preload adjacent artist pages to make clickthrough smoother
+        -Add search
+        -Format song card
 */
 
 
@@ -21,7 +21,7 @@ export default function MusicKitRequest(props){
     const [page, setPage] = useState(0);
     const [cardOpened, setCardOpened] = useState(-1);
     // idea restructure everything and use ref to highlight cards blue and expand invisible songspaces under each artist card
-
+    let cardColor = 0;
 
     function modifyPage(dict){
         let copy = {...state};
@@ -88,39 +88,47 @@ export default function MusicKitRequest(props){
         userSelect: 'none',
     }
 
+    function getCardBackground(){
+        cardColor++;
+        return cardColor%2==0 ? 'lightgray':'white';
+    }
+
     const createArtistCard = (i) => {
-        let bgColor = i%2 == 0 ? 'lightgray' : 'white';
+        let bgColor = getCardBackground();
         let textColor = 'black';
         if(state.cardOpened == i){bgColor = 'blue'; textColor = 'white';}
-        return (<div 
-            style={{...musicStyle, backgroundColor: bgColor, color: textColor}} 
+        return (<Box 
+            sx={{...musicStyle, backgroundColor: bgColor, color: textColor, height: {xs: 'fit-content', md: '100%'}}} 
             onDoubleClick={() => selectCard(i)}
         >
             <span style={{paddingLeft:'5px',}}>{state.cardOpened == i ? 'v' : '>'} {state.data[i].name}</span>
-        </div>)
+        </Box>)
     }
 
     const createSongCards = () => {
+        const spanStyle = {overflow: 'hidden', whiteSpace: 'nowrap', textAlign: 'left'}
         const header = (
-            <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly'}}>
-                <span>Title</span>
-                <span>Time</span>
-                <span>Artist</span>
-                <span>Album</span>
-                <span>Genre</span>
-                <span>Date Released</span>
-            </div>
+            <Grid container style={{backgroundColor: getCardBackground(), paddingLeft:'3%',}}>
+                <Grid item xs={12} md={3} style={spanStyle}>Title</Grid>
+                <Grid item xs={12} md={1} style={spanStyle}>Time</Grid>
+                <Grid item xs={12} md={2} style={spanStyle}>Artist</Grid>
+                <Grid item xs={12} md={3} style={spanStyle}>Album</Grid>
+                <Grid item xs={12} md={1} style={spanStyle}>Genre</Grid>
+                <Grid item xs={12} md={1} style={spanStyle}>Date Released</Grid>
+            </Grid>
         )
-        let songs = state.songs.map((song) => (
-            <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly'}}>
-                <span>{song.name}</span>
-                <span>{song.duration}</span>
-                <span>{song.artist}</span>
-                <span>{song.album}</span>
-                <span>{song.genres}</span>
-                <span>{song.dateReleased}</span>
-            </div>
-        ))
+        let songs = state.songs.map((song) => {
+            return(
+            <Grid container style={{backgroundColor: getCardBackground(), paddingLeft:'3%'}}>
+                <Grid item xs={12} md={3} style={spanStyle}>{song.name}</Grid>
+                <Grid item xs={12} md={1} style={spanStyle}>{song.duration}</Grid>
+                <Grid item xs={12} md={2} style={spanStyle}>{song.artist}</Grid>
+                <Grid item xs={12} md={3} style={spanStyle}>{song.album}</Grid>
+                <Grid item xs={12} md={1} style={spanStyle}>{song.genres}</Grid>
+                <Grid item xs={12} md={1} style={spanStyle}>{song.releaseDate}</Grid>
+            </Grid>
+        )
+        })
         return [header, ...songs];
     }
 
@@ -137,15 +145,16 @@ export default function MusicKitRequest(props){
 
     const iconStyle={
         height:'100%',
-        width:'5%'
+        width:{xs: '10%', md: '5%'},
+        marginLeft: {xs: '3%', md: '0%'},
     }
 
     const nowPlayingStyle={
         backgroundColor: '#E0E0E0', 
         borderRadius: '15px 15px 15px 15px', 
         height:'95%', 
-        width:'30%',
-        marginLeft:'18%',
+        width: {xs: '50%', md: '30%'},
+        marginLeft: {xs: '5%', md: '18%'},
         userSelect:'none', 
         display: 'flex', 
         flexDirection: 'column',
@@ -154,23 +163,14 @@ export default function MusicKitRequest(props){
         overflow: 'hidden',
     }
 
-    const barStyle={
-        alignSelf: 'flex-start',
-        backgroundColor:'blue',
-        height:'5%',
-        width:`${page*25*100/state.totalArtists}%`,
-        borderRadius: '20px 20px 20px 20px', 
-    }
-
     return(
         <Box style={{height: `${props.height}`}}>
             <Box style={{height: '8%', backgroundColor:'#F0F0F0', display:'flex', flexDirection:'row'}}>
-                <FastRewind style={{...iconStyle, marginLeft: '2%'}} onClick={() => flipPage(-1)}/>
-                <PlayArrow style={iconStyle}/>
-                <FastForward style={iconStyle} onClick={() => flipPage(1)}/>
-                <Box style={nowPlayingStyle}>
+                <FastRewind sx={{...iconStyle, marginLeft: '2%'}} onClick={() => flipPage(-1)}/>
+                <PlayArrow sx={iconStyle}/>
+                <FastForward sx={iconStyle} onClick={() => flipPage(1)}/>
+                <Box sx={nowPlayingStyle}>
                     <span style={{height:'95%', display:'inline-flex', alignItems:'center'}}>{state.data[state.cardOpened] != undefined ? state.data[state.cardOpened].name : ''}</span>
-                    <div style={barStyle}></div>
                 </Box>
             </Box>
             <Box style={{display: 'flex', flexDirection: 'column', height: '92%', overflowY: 'scroll', overflowX: 'hidden'}}>
