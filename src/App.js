@@ -60,7 +60,7 @@ function App() {
             <div id="projects">
                 <TerminalShowcase />
                 <Divider variant="middle" sx={{borderBottomWidth: '5px', width: '65vw', margin: '1vh 0px 3vh 17.5vw'}}/>
-                {/* <ChessShowcase/> */}
+                <ChessShowcase/>
             </div>
             <div id="music">
                 <MusicKitRequest height='80vh'/>

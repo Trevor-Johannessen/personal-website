@@ -2,6 +2,7 @@ import {useState, useEffect} from 'react'
 import me from '../resources/images/me.jpg' 
 import PyroIcon from '../resources/images/test/PyroIcon.png'
 import ED from '../resources/images/ED.jpg'
+import Athena from '../resources/images/Athena.jpg'
 import api from '../Requests'
 export default function MyImage(props){
     const [image, setImage] = useState('none');
@@ -15,7 +16,7 @@ export default function MyImage(props){
         asyncGetIP();
     }, [])
 
-    let img;
+    let src;
     const style = {
         borderRadius: '8px',
         objectFit: 'cover',
@@ -27,21 +28,23 @@ export default function MyImage(props){
     }
 
     switch(image){
-        case 'none': img=null;
+        case 'none': src=null;
             break;
-        case '0': img = <img src={me} style={style}/>;
+        case '0': src = me;
             break;
-        case '1': img = <img src={ED} style={style}/>;
+        case '1': src = ED;
             break;
-        case '2': img = <img src={PyroIcon} style={style}/>;
+        case '2': src = PyroIcon;
+            break;
+        case '3': src = Athena; 
             break;
         default:
-            img=null;
+            src=null;
     }
 
     return (
         <div>
-            {img ? img : ''}
+            {src ? <img src={src} style={style}></img> : ''}
         </div>
     )
 }

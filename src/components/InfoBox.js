@@ -4,9 +4,6 @@ import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 
 export default function InfoBox(props){
-
-    const height = props.height;
-    const width = props.width;
     const [textIndex, changeIndex] = useState(0);
     const contents = [
         ["Rules", "These are the rules of Chess 2."],
@@ -29,12 +26,14 @@ export default function InfoBox(props){
     return (
         <Box
             sx={{
-                height: {height},
-                width: {width},
+                height: '100%',
+                width: '100%',
                 backgroundColor: '#80c1ff',
                 borderColor: 'black',
                 borderWidth: '4px',
                 borderStyle: 'solid',
+                display: 'flex',
+                flexDirection: 'column',
             }}
         >
                 <div xs={10} style={{height: '78%', paddingLeft: '5px'}}>

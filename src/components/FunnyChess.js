@@ -1,10 +1,11 @@
+import { Box } from '@mui/material';
 import { setSelectionRange } from '@testing-library/user-event/dist/utils';
 import {useState} from 'react'
 export default function FunnyChess(props) {
     const pixelHeight = 12;
     const pixelWidth = 12;
-    const width = props.width + Number(props.width) % pixelWidth;
-    const height = props.height + Number(props.height) % pixelHeight;
+    const width = 1/pixelWidth;
+    const height = 1/pixelHeight;
     const moves = {
         pawn: [[1,0],[-1,0],[0,-1],[0,1]],
         knight: [[2,2],[1,1],[-2,-2],[-1,-1],[-2,2],[-1,1],[2,-2],[1,-1]],
@@ -112,6 +113,8 @@ export default function FunnyChess(props) {
 
     let clicked = (i, j) => {
         console.log(`clicked [${i}, ${j}]`)
+        console.log(`board[${i}][${j}] = ${board[i][j]}`);
+        console.log(`selectedBoard[0][${i}][${j}] = ${selectedBoard[0][i][j]}`);
         if(board[i][j] == '' && selectedBoard[0][i][j]){
             movePiece(selectedBoard[1], [i, j])
             updateSelected([[...Array(pixelWidth)].map(_=>Array(pixelHeight).fill(false)), [0,0], !selectedBoard[2]]);
@@ -125,10 +128,10 @@ export default function FunnyChess(props) {
         let row = []
         for(let i = 0; i < pixelWidth; i++)
             row.push((<div onClick={() => clicked(i, j)} style={{flex: 1, backgroundColor: selectedBoard[0][i][j] ? 'yellow' : (i%2+j)%2 == 0 ? 'tan' : 'brown'}}>{board[i][j] != 0 ? board[i][j] : ''}</div>))
-        visualBoard.push([(<div style={{display: 'flex', flexDirection: 'row', flex: 1, justifyContent: 'space-evenly'}}>{row}</div>)])    
+        visualBoard.push([(<Box sx={{display: 'flex', flexDirection: 'row', flex: 1, justifyContent: 'space-evenly', height: `${1/pixelHeight}%`}}>{row}</Box>)])    
     }
 
-    return (<div style={{display: 'flex', flexDirection: 'column', justifyContent:'space-evenly', borderColor: 'black', borderRadius:'5px', borderStyle: 'solid', borderwidth: '4px', width: `${width}vw`, height: `${height}`}}>
+    return (<div style={{display: 'flex', flexDirection: 'column', justifyContent:'space-evenly', borderColor: 'black', borderRadius:'5px', borderStyle: 'solid', borderwidth: '4px', width:'100%', height:'100%', userSelect: 'none'}}>
             {visualBoard}
         </div>)
 }   
