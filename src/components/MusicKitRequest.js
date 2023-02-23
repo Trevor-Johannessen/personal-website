@@ -1,5 +1,5 @@
-import { FastForward, FastRewind, PlayArrow } from '@mui/icons-material';
-import { Box, Grid } from '@mui/material';
+import { FastForward, FastRewind, PlayArrow, Menu, HighlightOff } from '@mui/icons-material';
+import { Box, Divider, Grid } from '@mui/material';
 import {useState, useEffect} from 'react'
 import api from '../Requests'
 
@@ -16,12 +16,13 @@ export default function MusicKitRequest(props){
     const [state, setState] = useState({
         data: [],
         songs: [],
+        history: [],
         cardOpened: -1,
-        totalArtists: 1
+        totalArtists: 1,
+        showPopup: true,
+        showQueue: false,
     })
     const [page, setPage] = useState(0);
-    const [cardOpened, setCardOpened] = useState(-1);
-    // idea restructure everything and use ref to highlight cards blue and expand invisible songspaces under each artist card
     let cardColor = 0;
 
     function modifyPage(dict){
@@ -44,7 +45,65 @@ export default function MusicKitRequest(props){
             modifyPage({'data': artists, totalArtists: musicData.data.meta.total, cardOpened: -1});
         }
         getArtists();
+
+        async function getHistory(){
+            let musicHistory = await api.getLastSong();
+            if(musicHistory.status != 200) return;
+            const data = musicHistory.data.data;
+            if(data != state.history)
+                modifyPage({'history': data})
+        }
+
+        // set timer for updating page elements
+        const interval = setInterval(() => {
+            console.log("Getting history.")
+            getHistory();
+          }, 5000);
+        
+          return () => clearInterval(interval);
     }, [page])
+
+    const currentlyPlayingStyle={
+        height: {xs: '10vh', md: '50vh'},
+        width: {xs: '10vh', md: '50vh'},
+        zIndex: 1,
+        position: 'fixed',
+        borderColor:'#F0F0F0',
+        borderRadius:'20px',
+        borderWidth:'3px',
+        borderStyle:'solid',
+        backgroundColor: 'white',
+        filter: 'drop-shadow(-4px 4px 5px black)',
+        bottom: '1vw',
+        right: '1vw',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+    }
+
+    const exitStyle = {
+
+    }
+    console.log(`url = ${state.history[0] ? `url(${state.history[0].attributes.artwork.url.replace('{h}x{w}', `${window.innerHeight*.25}x${window.innerHeight*.25}`)})` : ''}`)
+    console.log(state.history[0] ? `url(${state.history[0].attributes.artwork.url.replace('{h}x{w}', `${window.innerHeight*.25}x${window.innerHeight*.25}`)})` : '');
+    const currentlyPlayingPopup = (
+        <Box sx={currentlyPlayingStyle}>
+            <Box sx={{display: 'flex', flexDirection: 'row'}}>
+                <Menu/>
+                <HighlightOff style={{marginLeft: '25vh'}}/>
+            </Box>
+            <span style={{fontSize: 'small'}}>Now playing:</span>
+            <Divider variant="middle" sx={{borderBottomWidth: '2px', width: '15vh', }}/>
+            <span style={{fontSize: 'x-large'}}>{state.history[0] ? state.history[0].attributes.name : ''}</span>
+            <span style={{fontSize: 'large'}}>{state.history[0] ? state.history[0].attributes.albumName : ''}</span>
+            <img style={{height: '80%', width: '80%'}} src={state.history[0] ? `${state.history[0].attributes.artwork.url.replace('{w}x{h}', `${state.history[0].attributes.artwork.width}x${state.history[0].attributes.artwork.height}`)}` : ''}/>
+            <Box sx={{display: 'flex', flexDirection: 'row'}}>
+                
+            </Box>
+        </Box>
+    )
+
+
 
     // modified https://stackoverflow.com/questions/19700283/how-to-convert-time-in-milliseconds-to-hours-min-sec-format-in-javascript
     function msToTime(duration) {
@@ -77,7 +136,7 @@ export default function MusicKitRequest(props){
     }
 
     const flipPage = (i) => {
-        if(Math.ceil(state.totalArtists/25) > page && i > 0)
+        if(Math.ceil(state.totalArtists/25)-1 > page && i > 0)
             setPage(page+1);
         else if(page > 0 && i < 0)
             setPage(page-1);
@@ -181,18 +240,30 @@ export default function MusicKitRequest(props){
         overflow: 'hidden',
     }
 
+    const barStyle={
+        alignSelf: 'flex-start',
+        backgroundColor:'blue',
+        height:'5%',
+        width:`${page*25*100/state.totalArtists}%`,
+        borderRadius: '20px 20px 20px 20px', 
+    }
     return(
-        <Box style={{height: `${props.height}`}}>
-            <Box style={{height: '8%', backgroundColor:'#F0F0F0', display:'flex', flexDirection:'row'}}>
-                <FastRewind sx={{...iconStyle, marginLeft: '2%'}} onClick={() => flipPage(-1)}/>
-                <PlayArrow sx={iconStyle}/>
-                <FastForward sx={iconStyle} onClick={() => flipPage(1)}/>
-                <Box sx={nowPlayingStyle}>
-                    <span style={{height:'95%', display:'inline-flex', alignItems:'center'}}>{state.data[state.cardOpened] != undefined ? state.data[state.cardOpened].name : ''}</span>
+        <Box>
+            {state.showPopup ? currentlyPlayingPopup : ''}
+            <Box style={{height: `${props.height}`}}>
+                <Box style={{height: '8%', backgroundColor:'#F0F0F0', display:'flex', flexDirection:'row'}}>
+                    <FastRewind sx={{...iconStyle, marginLeft: '2%'}} onClick={() => flipPage(-1)}/>
+                    <PlayArrow sx={iconStyle}/>
+                    <FastForward sx={iconStyle} onClick={() => flipPage(1)}/>
+                    <Box sx={nowPlayingStyle}>
+                        <span style={{height:'95%', display:'inline-flex', alignItems:'center'}}>{state.data[state.cardOpened] != undefined ? state.data[state.cardOpened].name : ''}</span>
+                        <div style={barStyle}></div>
+                    </Box>
+                    <Menu sx={iconStyle}/>
                 </Box>
-            </Box>
-            <Box style={{display: 'flex', flexDirection: 'column', height: '92%', overflowY: 'scroll', overflowX: 'hidden'}}>
-                {cards}
+                <Box style={{display: 'flex', flexDirection: 'column', height: '92%', overflowY: 'scroll', overflowX: 'hidden'}}>
+                    {cards}
+                </Box>
             </Box>
         </Box>
     )

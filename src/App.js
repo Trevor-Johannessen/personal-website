@@ -52,7 +52,7 @@ function App() {
                     </Grid>
                     <Grid item sm={8} xs={12}>
                         <Grid container>
-                            <Grid item><LinkedText/></Grid>
+                            {/* <Grid item><LinkedText links={{text1: 'http:www.google.com', text2: 'http.www.google.com'}}/></Grid> */}
                             <Grid item><DynamicGallery/></Grid>
                         </Grid>
                         

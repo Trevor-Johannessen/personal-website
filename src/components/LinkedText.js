@@ -8,10 +8,14 @@ export default function LinkedText(props){
 
     useEffect(() => {
         const links = props.links; // give dictionary of all keywords to replace with query response.
-        const req = new XMLHttpRequest();
 
-        for(let key in links){
-            console.log(key)
+        for(let keyString in links){
+            // keyString is the string to be replaced
+            console.log(keyString);
+            console.log(links[keyString])
+            //const req = new XMLHttpRequest();
+            //req.open('GET', )
+
         }
     }, [])
 
@@ -32,7 +36,7 @@ export default function LinkedText(props){
 
     return(
         <Box sx={paragraphStyle}>
-            a
+            
         </Box>
     )
 }

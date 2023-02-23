@@ -139,18 +139,6 @@
   background-color: rgba(3, 252, 127, .5);
 }
 
-#about-paragraph{
-  max-width: 50vw;
-  height: min-content;
-  text-align: left;
-  background-color:aliceblue;
-  border-width: 2px;
-  border-style: solid;
-  border-radius: 25px;
-  border-color: black;
-  padding:1%
-}
-
 #experience {
   height: 95vh;
   background-color: rgba(0, 65, 82, .5)
@@ -162,8 +150,6 @@
   display: flex;
   flex-direction: column;
 }
-
-#contact {}
 
 .slide-in-left-start {
   opacity: 0;

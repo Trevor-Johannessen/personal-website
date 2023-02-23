@@ -1,6 +1,8 @@
-import { Box } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import { setSelectionRange } from '@testing-library/user-event/dist/utils';
 import {useState} from 'react'
+import api from '../Requests'
+
 export default function FunnyChess(props) {
     const pixelHeight = 12;
     const pixelWidth = 12;
@@ -15,6 +17,12 @@ export default function FunnyChess(props) {
         bishop: [[0, 1], [0, 2], [0, -1], [0, -2], [1, 0], [-1, 0]]
 
     }
+    const startMenu = (
+        <div style={{zIndex: 1, position: 'reletive', top: '0px', left: '0px'}}>
+            <span>There is currently no game in progress.</span>
+            <Button onClick={() => startGame()}>Start Game?</Button>
+        </div>
+    )
     let tempBoard = [...Array(pixelWidth)].map(_=>Array(pixelHeight).fill(''));
     const set = {0: {king: '♔', queen: '♕', knight: '♘', bishop: '♗', rook: '♖', pawn: '♙'}, [pixelHeight-1]: {king: '♚', queen: '♛', knight: '♞', bishop: '♝', rook: '♜', pawn: '♟'}}
     for(let i = 0; i < pixelWidth; i++)
@@ -36,7 +44,7 @@ export default function FunnyChess(props) {
     }
     const [board, updateBoard] = useState(tempBoard);
     const [selectedBoard, updateSelected] = useState([[...Array(pixelWidth)].map(_=>Array(pixelHeight).fill(false)), [0,0], false]) // selected array, whether in selection phase, original piece location
-
+    const [gameState, updateGameState] = useState({state: 'notstarted', menu: startMenu, winner: false}) // GAMESTATE, MENU, WINNER
 
     let selectPiece = (i, j) => {
         let newSelectedBoard = [...Array(pixelWidth)].map(_=>Array(pixelHeight).fill(false))
@@ -123,6 +131,12 @@ export default function FunnyChess(props) {
             selectPiece(i, j);
     }
 
+    let startGame = () => {
+        updateBoard([...Array(pixelWidth)].map(_=>Array(pixelHeight).fill('')));
+        api.startNewGame();
+        updateGameState({state: 'ongoing', menu: null, winner: false});
+    }
+
     let visualBoard = []
     for(let j = 0; j < pixelHeight; j++){
         let row = []
@@ -132,6 +146,6 @@ export default function FunnyChess(props) {
     }
 
     return (<div style={{display: 'flex', flexDirection: 'column', justifyContent:'space-evenly', borderColor: 'black', borderRadius:'5px', borderStyle: 'solid', borderwidth: '4px', width:'100%', height:'100%', userSelect: 'none'}}>
-            {visualBoard}
+            {gameState.state != 'ongoing' ? gameState.menu : visualBoard}
         </div>)
 }   
