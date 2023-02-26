@@ -26,10 +26,17 @@ export default function MusicKitRequest(props){
     let cardColor = 0;
 
     function modifyPage(dict){
-        let copy = {...state};
-        for(let key in dict)
-            copy[key] = dict[key];
-        setState(copy)
+        setState(state => { return {...state, ...dict}});
+    }
+
+    async function getHistory(){
+        let musicHistory = await api.getLastSong();
+        if(musicHistory.status != 200) return;
+        const data = musicHistory.data.data;
+        console.log(`Length = ${state.data.length}`)
+        if(data != state.history){
+            modifyPage({history: data})
+        }
     }
 
     useEffect(()=>{
@@ -46,14 +53,6 @@ export default function MusicKitRequest(props){
         }
         getArtists();
 
-        async function getHistory(){
-            let musicHistory = await api.getLastSong();
-            if(musicHistory.status != 200) return;
-            const data = musicHistory.data.data;
-            if(data != state.history)
-                modifyPage({'history': data})
-        }
-
         // set timer for updating page elements
         const interval = setInterval(() => {
             console.log("Getting history.")
@@ -62,6 +61,9 @@ export default function MusicKitRequest(props){
         
           return () => clearInterval(interval);
     }, [page])
+
+
+
 
     const currentlyPlayingStyle={
         height: {xs: '10vh', md: '50vh'},
@@ -103,8 +105,6 @@ export default function MusicKitRequest(props){
         </Box>
     )
 
-
-
     // modified https://stackoverflow.com/questions/19700283/how-to-convert-time-in-milliseconds-to-hours-min-sec-format-in-javascript
     function msToTime(duration) {
         var milliseconds = Math.floor((duration % 1000) / 100),
@@ -125,10 +125,8 @@ export default function MusicKitRequest(props){
 
     async function selectCard(i){
         if(state.cardOpened == i){
-            //setCardOpened(-1)
             modifyPage({songs: [], cardOpened: -1});
         }else{
-            //setCardOpened(i);
             modifyPage({cardOpened: i, songs: []}) // maybe this will work, maybe it wont... lets see!
             let requestedSongs = await getSongs(state.data[i].id)
             modifyPage({songs: requestedSongs, cardOpened: i});
