@@ -9,7 +9,7 @@ import FunnyChess from './components/FunnyChess';
 import TerminalShowcase from './components/Showcases/TerminalShowcase';
 import ChessShowcase from './components/Showcases/ChessShowcase';
 import MyImage from './components/MyImage';
-import MusicKitRequest from './components/MusicKitRequest';
+import MusicKitDisplay from './components/MusicKitDisplay';
 import LinkedText from './components/LinkedText';
 
 function App() {
@@ -68,7 +68,7 @@ function App() {
                 <ChessShowcase/>
             </div>
             <div id="music">
-                <MusicKitRequest height='80vh'/>
+                <MusicKitDisplay height='80vh'/>
             </div>
             <div id="contact" style={{backgroundColor: 'black', height: '10vh', color: 'white'}}>
                 <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>

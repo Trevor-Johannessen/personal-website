@@ -2,6 +2,7 @@ import { FastForward, FastRewind, PlayArrow, Menu, HighlightOff } from '@mui/ico
 import { Box, Divider, Grid } from '@mui/material';
 import {useState, useEffect} from 'react'
 import api from '../Requests'
+import MusicKitNowPlaying from './MusicKitNowPlaying';
 
 /*
     TODO: 
@@ -29,16 +30,6 @@ export default function MusicKitRequest(props){
         setState(state => { return {...state, ...dict}});
     }
 
-    async function getHistory(){
-        let musicHistory = await api.getLastSong();
-        if(musicHistory.status != 200) return;
-        const data = musicHistory.data.data;
-        console.log(`Length = ${state.data.length}`)
-        if(data != state.history){
-            modifyPage({history: data})
-        }
-    }
-
     useEffect(()=>{
         async function getArtists(){
             let musicData = await api.getMusicData(page);
@@ -53,57 +44,11 @@ export default function MusicKitRequest(props){
         }
         getArtists();
 
-        // set timer for updating page elements
-        const interval = setInterval(() => {
-            console.log("Getting history.")
-            getHistory();
-          }, 5000);
-        
-          return () => clearInterval(interval);
     }, [page])
 
 
 
 
-    const currentlyPlayingStyle={
-        height: {xs: '10vh', md: '50vh'},
-        width: {xs: '10vh', md: '50vh'},
-        zIndex: 1,
-        position: 'fixed',
-        borderColor:'#F0F0F0',
-        borderRadius:'20px',
-        borderWidth:'3px',
-        borderStyle:'solid',
-        backgroundColor: 'white',
-        filter: 'drop-shadow(-4px 4px 5px black)',
-        bottom: '1vw',
-        right: '1vw',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-    }
-
-    const exitStyle = {
-
-    }
-    console.log(`url = ${state.history[0] ? `url(${state.history[0].attributes.artwork.url.replace('{h}x{w}', `${window.innerHeight*.25}x${window.innerHeight*.25}`)})` : ''}`)
-    console.log(state.history[0] ? `url(${state.history[0].attributes.artwork.url.replace('{h}x{w}', `${window.innerHeight*.25}x${window.innerHeight*.25}`)})` : '');
-    const currentlyPlayingPopup = (
-        <Box sx={currentlyPlayingStyle}>
-            <Box sx={{display: 'flex', flexDirection: 'row'}}>
-                <Menu/>
-                <HighlightOff style={{marginLeft: '25vh'}}/>
-            </Box>
-            <span style={{fontSize: 'small'}}>Now playing:</span>
-            <Divider variant="middle" sx={{borderBottomWidth: '2px', width: '15vh', }}/>
-            <span style={{fontSize: 'x-large'}}>{state.history[0] ? state.history[0].attributes.name : ''}</span>
-            <span style={{fontSize: 'large'}}>{state.history[0] ? state.history[0].attributes.albumName : ''}</span>
-            <img style={{height: '80%', width: '80%'}} src={state.history[0] ? `${state.history[0].attributes.artwork.url.replace('{w}x{h}', `${state.history[0].attributes.artwork.width}x${state.history[0].attributes.artwork.height}`)}` : ''}/>
-            <Box sx={{display: 'flex', flexDirection: 'row'}}>
-                
-            </Box>
-        </Box>
-    )
 
     // modified https://stackoverflow.com/questions/19700283/how-to-convert-time-in-milliseconds-to-hours-min-sec-format-in-javascript
     function msToTime(duration) {
@@ -247,7 +192,7 @@ export default function MusicKitRequest(props){
     }
     return(
         <Box>
-            {state.showPopup ? currentlyPlayingPopup : ''}
+            <MusicKitNowPlaying active={state.showPopup} closeSelf={() => {modifyPage({showPopup: false})}}/>
             <Box style={{height: `${props.height}`}}>
                 <Box style={{height: '8%', backgroundColor:'#F0F0F0', display:'flex', flexDirection:'row'}}>
                     <FastRewind sx={{...iconStyle, marginLeft: '2%'}} onClick={() => flipPage(-1)}/>
@@ -257,7 +202,7 @@ export default function MusicKitRequest(props){
                         <span style={{height:'95%', display:'inline-flex', alignItems:'center'}}>{state.data[state.cardOpened] != undefined ? state.data[state.cardOpened].name : ''}</span>
                         <div style={barStyle}></div>
                     </Box>
-                    <Menu sx={iconStyle}/>
+                    <Menu sx={iconStyle} onClick={() => modifyPage({showPopup: !state.showPopup})}/>
                 </Box>
                 <Box style={{display: 'flex', flexDirection: 'column', height: '92%', overflowY: 'scroll', overflowX: 'hidden'}}>
                     {cards}
