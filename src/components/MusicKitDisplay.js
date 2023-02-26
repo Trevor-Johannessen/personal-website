@@ -204,7 +204,7 @@ export default function MusicKitRequest(props){
                     </Box>
                     <Menu sx={iconStyle} onClick={() => modifyPage({showPopup: !state.showPopup})}/>
                 </Box>
-                <Box style={{display: 'flex', flexDirection: 'column', height: '92%', overflowY: 'scroll', overflowX: 'hidden'}}>
+                <Box style={{display: 'flex', flexDirection: 'column', height: '92%', overflowY: 'scroll', overflowX: 'scroll'}}>
                     {cards}
                 </Box>
             </Box>
