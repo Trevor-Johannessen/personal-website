@@ -25,7 +25,7 @@ export default function MusicKitRequest(props){
     })
     const [page, setPage] = useState(0);
     let cardColor = 0;
-
+    const maxCards = 25;
     function modifyPage(dict){
         setState(state => { return {...state, ...dict}});
     }
@@ -118,7 +118,7 @@ export default function MusicKitRequest(props){
         let textColor = 'black';
         if(state.cardOpened == i){bgColor = 'blue'; textColor = 'white';}
         return (<Box 
-            sx={{...musicStyle, backgroundColor: bgColor, color: textColor, height: {xs: 'fit-content', md: '100%'}}} 
+            sx={{...musicStyle, backgroundColor: bgColor, color: textColor, maxHeight: {xs: 'fit-content', md: `${100/maxCards}%`}}} 
             onDoubleClick={() => selectCard(i)}
         >
             <span style={{paddingLeft:'5px',}}>{state.cardOpened == i ? 'v' : '>'} {state.data[i].name}</span>
@@ -128,7 +128,7 @@ export default function MusicKitRequest(props){
     const createSongCards = () => {
         const spanStyle = {overflow: 'hidden', whiteSpace: 'nowrap', textAlign: 'left'}
         const header = (
-            <Grid container style={{backgroundColor: getCardBackground(), paddingLeft:'3%',}}>
+            <Grid container style={{backgroundColor: getCardBackground(), paddingLeft:'3%', height: `${100/maxCards}%`}}>
                 <Grid item xs={12} md={3} style={spanStyle}>Title</Grid>
                 <Grid item xs={12} md={1} style={spanStyle}>Time</Grid>
                 <Grid item xs={12} md={2} style={spanStyle}>Artist</Grid>
@@ -139,7 +139,7 @@ export default function MusicKitRequest(props){
         )
         let songs = state.songs.map((song) => {
             return(
-            <Grid container style={{backgroundColor: getCardBackground(), paddingLeft:'3%'}}>
+            <Grid container style={{backgroundColor: getCardBackground(), paddingLeft:'3%', height: `${100/maxCards}%`}}>
                 <Grid item xs={12} md={3} style={spanStyle}>{song.name}</Grid>
                 <Grid item xs={12} md={1} style={spanStyle}>{msToTime(song.duration)}</Grid>
                 <Grid item xs={12} md={2} style={spanStyle}>{song.artist}</Grid>

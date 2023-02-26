@@ -5,7 +5,7 @@ import api from '../Requests'
 
 export default function MusicKitNowPlaying(props) {
     const [history, setHistory] = useState([]);
-    const [showHistory, setShowHistory] = useState(true)
+    const [showHistory, setShowHistory] = useState(false)
     const imgSize = 300;
 
     useEffect(() => {
@@ -46,15 +46,12 @@ export default function MusicKitNowPlaying(props) {
         alignItems: 'center',
     }
 
-    const exitStyle = {
-
-    }
     const currentlyPlayingPopup = (
         <Fade in={props.active} timeout={{enter: 1000, exit: 1500}}>
             <Box sx={currentlyPlayingStyle}>
                 <Box sx={{display: 'flex', flexDirection: 'row'}}>
-                    <Menu/>
-                    <Button style={{marginLeft: '25vh', color: 'black'}} onClick={() => props.closeSelf()}><HighlightOff/></Button>
+                    <Button onClick={() => setShowHistory(!showHistory)} style={{color: 'black'}} disableRipple><Menu/></Button>
+                    <Button style={{marginLeft: '25vh', color: 'black'}} onClick={() => props.closeSelf()} disableRipple><HighlightOff/></Button>
                 </Box>
                 <span style={{fontSize: 'small'}}>Now playing:</span>
                 <Divider variant="middle" sx={{borderBottomWidth: '2px', width: '15vh', }}/>
