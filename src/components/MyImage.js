@@ -30,7 +30,7 @@ export default function MyImage(props){
     switch(image){
         case 'none': src=null;
             break;
-        case '0': src = null;
+        case '0': src = me;
             break;
         case '1': src = ED;
             break;
