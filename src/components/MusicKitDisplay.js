@@ -192,7 +192,7 @@ export default function MusicKitRequest(props){
     }
     return(
         <Box>
-            <MusicKitNowPlaying active={state.showPopup} closeSelf={() => {modifyPage({showPopup: false})}}/>
+            <MusicKitNowPlaying style={{position: 'absolute'}} active={state.showPopup} closeSelf={() => {modifyPage({showPopup: false})}}/>
             <Box style={{height: `${props.height}`}}>
                 <Box style={{height: '8%', backgroundColor:'#F0F0F0', display:'flex', flexDirection:'row'}}>
                     <FastRewind sx={{...iconStyle, marginLeft: '2%'}} onClick={() => flipPage(-1)}/>

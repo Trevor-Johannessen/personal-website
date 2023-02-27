@@ -41,21 +41,18 @@ export default function MusicKitNowPlaying(props) {
     }
 
     const currentlyPlayingStyle={
-        height: {xs: '40vh', md: '50vh'},
-        width: {xs: '100%', md: '50vh'},
-        zIndex: 1,
-        position: 'fixed',
+        height: {xs: '60vh', md: '50vh'},
+        width: {xs: '100vw', md: '50vh'},
         borderColor:'#F0F0F0',
         borderRadius:'20px',
-        borderWidth:'3px',
+        borderWidth:{xs: '0px', md: '3px'},
         borderStyle:'solid',
         backgroundColor: 'white',
-        filter: 'drop-shadow(-4px 4px 5px black)',
-        bottom: {xs: '0px', md: '2vh'},
-        right: {xs: '0px', md: '2vh'},
+        // filter: 'drop-shadow(-4px 4px 5px black)',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+        marginTop: {xs: '50vh', md: '0px'},
     }
 
     const currentlyPlayingPopup = (
@@ -74,6 +71,16 @@ export default function MusicKitNowPlaying(props) {
             </Box>
         </Box>
     )
+
+    const mobilePopupScrollStyle = {
+        height: {xs: '60vh', md: 'fit-content'},
+        backgroundColor: 'transparent',
+        zIndex: 1,
+        position: 'fixed',
+        bottom: {xs: '0px', md: '2vh'},
+        right: {xs: '0px', md: '2vh'},
+        overflowY:'scroll',
+    }
 
     const historyStyle = {
         height: {xs: '0px', md: '60vh'},
@@ -121,11 +128,13 @@ export default function MusicKitNowPlaying(props) {
 
 
     return (
-        <Box sx={{display: 'flex', flexDirection:'row'}}>
-            
-            {window.innerWidth < 600 ? 
-            <Collapse in={checkTransition()[0]} orientation="horizontal" timeout={1000}>{currentlyPlayingPopup}</Collapse> : 
-            <Fade in={checkTransition()[1]} timeout={{enter: 1000, exit: 1500}}>{currentlyPlayingPopup}</Fade>}
+        <Box sx={{display: 'flex', flexDirection:'row', position:'absolute'}}>
+            <Box sx={mobilePopupScrollStyle}>
+                {/* <div style={{height: '40vh', width: '100vw', backgroundColor:'red'}}/> */}
+                {window.innerWidth < 600 ? 
+                <Collapse in={checkTransition()[0]} orientation="horizontal" timeout={1000}>{currentlyPlayingPopup}</Collapse> : 
+                <Fade in={checkTransition()[1]} timeout={{enter: 1000, exit: 1500}}>{currentlyPlayingPopup}</Fade>}
+            </Box>
             
             <Fade in={props.active && showHistory[1]} timeout={{enter: 1000, exit: 1500}}>{historyCard}</Fade>
                        
