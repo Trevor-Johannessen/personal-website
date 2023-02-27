@@ -43,12 +43,11 @@ export default function MusicKitNowPlaying(props) {
     const currentlyPlayingStyle={
         height: {xs: '60vh', md: '50vh'},
         width: {xs: '100vw', md: '50vh'},
-        borderColor:'#F0F0F0',
+        borderColor:'#C0C0C0',
         borderRadius:'20px',
         borderWidth:{xs: '0px', md: '3px'},
         borderStyle:'solid',
         backgroundColor: 'white',
-        // filter: 'drop-shadow(-4px 4px 5px black)',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -80,6 +79,7 @@ export default function MusicKitNowPlaying(props) {
         bottom: {xs: '0px', md: '2vh'},
         right: {xs: '0px', md: '2vh'},
         overflowY:'scroll',
+        marginTop:{xs: '10vh', md: '0px'}
     }
 
     const historyStyle = {
