@@ -20,7 +20,7 @@ export default function MusicKitRequest(props){
         history: [],
         cardOpened: -1,
         totalArtists: 1,
-        showPopup: true,
+        showPopup: false,
         showQueue: false,
     })
     const [page, setPage] = useState(0);

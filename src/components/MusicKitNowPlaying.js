@@ -57,7 +57,7 @@ export default function MusicKitNowPlaying(props) {
     const currentlyPlayingPopup = (
         <Box sx={currentlyPlayingStyle}>
             <Box sx={{display: 'flex', flexDirection: 'row'}}>
-                <Button onClick={() => setShowHistory(!showHistory)} style={{color: 'black'}} disableRipple><Menu/></Button>
+                <Button onClick={() => toggleHistory()} style={{color: 'black'}} disableRipple><Menu/></Button>
                 <Button style={{marginLeft: '25vh', color: 'black'}} onClick={() => {console.log("Closing"); props.closeSelf()}} disableRipple><HighlightOff/></Button>
             </Box>
             <span style={{fontSize: 'small'}}>Now playing:</span>
@@ -130,13 +130,12 @@ export default function MusicKitNowPlaying(props) {
     return (
         <Box sx={{display: 'flex', flexDirection:'row', position:'absolute'}}>
             <Box sx={mobilePopupScrollStyle}>
-                {/* <div style={{height: '40vh', width: '100vw', backgroundColor:'red'}}/> */}
                 {window.innerWidth < 600 ? 
                 <Collapse in={checkTransition()[0]} orientation="horizontal" timeout={1000}>{currentlyPlayingPopup}</Collapse> : 
                 <Fade in={checkTransition()[1]} timeout={{enter: 1000, exit: 1500}}>{currentlyPlayingPopup}</Fade>}
             </Box>
             
-            <Fade in={props.active && showHistory[1]} timeout={{enter: 1000, exit: 1500}}>{historyCard}</Fade>
+            <Fade in={props.active && showHistory[0]} timeout={{enter: 1000, exit: 1500}}>{historyCard}</Fade>
                        
         </Box>
     )

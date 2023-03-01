@@ -13,18 +13,6 @@ import MusicKitDisplay from './components/MusicKitDisplay';
 import LinkedText from './components/LinkedText';
 
 function App() {
-    const [ip, setIP] = useState(0);
-    useEffect(() => {
-
-
-
-
-        // I was going to use this to ban my friend from accessing my website, but it would require publically
-        // posting her IP to github so I cannot do that at this time.
-        // $.getJSON("https://api.ipify.org?format=json", function(data) {
-        //     setIP(data.ip);
-        // })
-    })
 
 
 

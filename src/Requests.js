@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const api = axios.create({
     baseURL: 'https://powerofthegem.com:5000',
-    //baseURL: 'http://localhost:5000'
+    //baseURL: 'http://127.0.0.1:5000'
 })
 
 // Photo calls
@@ -31,13 +31,20 @@ export const getLastSong = () => {
 export const getChessProgress = () => {
     return api.get('/chess/game-in-progress/')
 }
-
 export const startNewGame = () => {
     return api.get('/chess/new-game/')
 }
-
-export const setBoard = (board) => {
-    return api.put('/chess/set-board')
+export const joinGame = (id) => {
+    return api.get(`/chess/join-game/?id=${id}`)
+}
+export const getBoard = (id) => {
+    return api.get(`/chess/get-board/?id=${id}`)
+}
+export const getSize = (id) => {
+    return api.get(`/chess/get-size/?id=${id}`)
+}
+export const movePiece = (id, instruction) => {
+    return api.post(`/chess/move-piece/?id=${id}`, {move: instruction})
 }
 
 
@@ -50,6 +57,9 @@ const apis = {
     getLastSong,
     getChessProgress,
     startNewGame,
-    setBoard,
+    joinGame,
+    getBoard,
+    getSize,
+    movePiece,
 }
 export default apis

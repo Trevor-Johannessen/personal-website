@@ -4,6 +4,7 @@ import {useState} from 'react'
 import api from '../Requests'
 
 export default function FunnyChess(props) {
+    const [refreshFlag, setRefreshFlag] = useState(false); // flag to tell whether we're supposed to send get requests to refresh the board or not
     const pixelHeight = 12;
     const pixelWidth = 12;
     const width = 1/pixelWidth;

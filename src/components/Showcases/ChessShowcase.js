@@ -1,5 +1,6 @@
 import {Box, Grid} from '@mui/material'
 import FunnyChess from '../FunnyChess'
+import FunnyChessOnline from '../FunnyChessOnline'
 import InfoBox from '../InfoBox'
 
 export default function ChessShowcase(props){
@@ -17,7 +18,7 @@ export default function ChessShowcase(props){
                 }}>
                 <Grid container rowSpacing={{xs: '12', md:'1'}}>
                     <Grid item xs={12} md={6}><Box sx={{width: {xs: '80vw', md: '15vw'}, height: {xs: '50vh', md: '36vh' }, marginBottom: {xs:'5vh', md:'0vh'}}}><InfoBox/></Box></Grid>
-                    <Grid item xs={12} md={6}><Box sx={{height: {xs: '90vw', md: '36vh'}}}><FunnyChess/></Box></Grid>
+                    <Grid item xs={12} md={6}><Box sx={{height: {xs: '90vw', md: '36vh'}}}><FunnyChessOnline/></Box></Grid>
                 </Grid>
             </Box>
         </Box>
