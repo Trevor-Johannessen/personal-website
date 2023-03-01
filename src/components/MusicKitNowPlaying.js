@@ -52,6 +52,12 @@ export default function MusicKitNowPlaying(props) {
         flexDirection: 'column',
         alignItems: 'center',
         marginTop: {xs: '50vh', md: '0px'},
+        zIndex: 1,
+        position: 'fixed',
+        bottom: {xs: '0px', md: '2vh'},
+        right: {xs: '0px', md: '2vh'},
+        overflowY:'scroll',
+        marginTop:{xs: '10vh', md: '0px'},
     }
 
     const currentlyPlayingPopup = (
@@ -128,15 +134,12 @@ export default function MusicKitNowPlaying(props) {
 
 
     return (
-        <Box sx={{display: 'flex', flexDirection:'row', position:'absolute'}}>
-            <Box sx={mobilePopupScrollStyle}>
-                {window.innerWidth < 600 ? 
-                <Collapse in={checkTransition()[0]} orientation="horizontal" timeout={1000}>{currentlyPlayingPopup}</Collapse> : 
-                <Fade in={checkTransition()[1]} timeout={{enter: 1000, exit: 1500}}>{currentlyPlayingPopup}</Fade>}
-            </Box>
+        <>
+            {window.innerWidth < 600 ? 
+            <Collapse in={checkTransition()[0]} orientation="horizontal" timeout={1000}>{currentlyPlayingPopup}</Collapse> : 
+            <Fade in={checkTransition()[1]} timeout={{enter: 1000, exit: 1500}}>{currentlyPlayingPopup}</Fade>}
             
-            <Fade in={props.active && showHistory[0]} timeout={{enter: 1000, exit: 1500}}>{historyCard}</Fade>
-                       
-        </Box>
+            <Fade in={props.active && showHistory[0]} timeout={{enter: 1000, exit: 1500}}>{historyCard}</Fade>             
+        </>
     )
 }
