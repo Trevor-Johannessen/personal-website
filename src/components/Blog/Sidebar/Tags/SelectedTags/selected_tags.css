@@ -1,0 +1,16 @@
+.blog-sidebar-tag-selected{
+    border-radius:20px;
+    background-color:rgb(0, 168, 234);
+    width:min-content;
+    padding: 2px 5px 2px 5px;
+    margin: 1px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.blog-sidebar-tags-selected-container{
+    display:flex;
+    flex-direction: row;
+    flex-wrap:wrap;
+}

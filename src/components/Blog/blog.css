@@ -1,0 +1,7 @@
+#blog{
+    background-color:rgb(253, 249, 249);
+    flex-direction:row;
+    display:flex;
+    width:100vw;
+    height:100vh;
+}

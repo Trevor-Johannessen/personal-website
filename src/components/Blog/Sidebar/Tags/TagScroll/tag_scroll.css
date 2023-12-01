@@ -1,0 +1,28 @@
+#blog-sidebar-tags-scroll{
+    margin:1%;
+    overflow-y:scroll;
+    overflow-x:hidden;
+}
+
+.blog-sidebar-tags-card{
+    width:90%;
+    height:10%;
+    border-radius:50px;
+    border-style:solid;
+    border-color:rgb(255, 255, 255);
+    border-width:2px;
+    margin-left:5%;
+    margin-right:5%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+}
+.blog-sidebar-tags-card:hover{
+    border-color:rgb(250, 250, 250);
+    background-color:rgba(238, 238, 238,.7);
+}
+
+.blog-sidebar-tag-selected{
+    border-radius:50px;
+}

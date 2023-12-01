@@ -1,0 +1,21 @@
+#blog-sidebar{
+    height:65vh;
+    width:15vw;
+    padding:1%;
+    filter: drop-shadow(5px 5px 4px rgba(0,0,0,.2));
+    display:flex;
+    flex-direction:column;
+}
+
+#blog-sidebar-searchbar{
+    width:100%;
+}
+
+#blog-sidebar-divider{
+    margin-top:1.5vh;
+    margin-bottom:1.5vh;
+}
+
+#blog-sidebar-tagholder{
+    height:100%;
+}
